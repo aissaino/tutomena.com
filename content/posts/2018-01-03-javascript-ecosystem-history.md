@@ -27,56 +27,74 @@ thumbnail: '../thumbnails/nodejs.png'
 
 لنفترض أنه لدينا ملف _script.js_ يحتوي على أكواد الجافاسكربت التي قمنا بكتابتها، ليكن محتوى هذا الملف ببساطة هو كالتالي :
 
-// script.js
-console.log("مرحبا في ملف الجافاسكربت!");
+<div class="filename">script.js</div>
 
-الطريقة القديمة في إضافة الجافاسكربت لصفحات html تتمثل في استدعاء ملف جافاسكربت *script.js* من الصفحة _index.html_ باستخدام الوسم _<script>_ كما يلي :
+```js
+console.log('مرحبا في ملف الجافاسكربت!');
+```
 
-<!-- index.html -->
+الطريقة القديمة في إضافة الجافاسكربت لصفحات html تتمثل في استدعاء ملف جافاسكربت *script.js* من الصفحة _index.html_ باستخدام الوسم `<script>` كما يلي :
+
+<div class="filename">index.html</div>
+
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>مثال لجافاسكربت</title>
-  <script src="script.js"></script>
-</head>
-<body>
-  <h1>مرحبا بكم!</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>مثال لجافاسكربت</title>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>مرحبا بكم!</h1>
+  </body>
 </html>
+```
 
 هذا كل ما نحتاجه لإضافة أكواد جافاسكربت لموقعنا!
 
 لنقل بأننا نريد بعد ذلك إضافة مكتبة جافاسكربت خارجية، مثلا _Moment.js_ (هذه المكتبة تقوم بتحويل التواريخ البرمجية إلى تواريخ يستطيع الإنسان العادي قراءتها). على سبيل المثال يمكننا استخدامها كما يلي :
 
-moment("20111031", "YYYYMMDD").fromNow(); // منذ ٦ أعوام
+```js
+moment('20111031', 'YYYYMMDD').fromNow(); // منذ ٦ أعوام
+```
 
 بطبيعة الحال لن تستطيع استخدام هذه المكتبة إلا إذا قمت باستدعائها من الصفحة. في الصفحة الرئيسية ل _moment.js_ هناك تعليمات، كما في الصورة أسفله، لمساعدتنا على إضافة هذه المكتبة لمشروعنا :
 
-[![](../images/momentjs-install-instructions.jpg)](../images/momentjs-install-instructions.jpg)
+![](../images/momentjs-install-instructions.jpg)
 
 ما كل هذه الأكواد الغريبة ؟! عفوا نسيت بأننا ما نزال مع مدرسة جافاسكربت القديمة. سنعود لهذه الأكواد فيما بعد، ولكن دعونا الآن فقط نقوم بتحميل مكتبة _Moment.js_ يدويا ثم نقوم بإضافة الملف _moment.min.js_ لمشروعنا واستدعاؤه في صفحة _index.html_ كما فعلنا مع الملف الأول الخاص بنا :
 
-<!-- index.html -->
+<div class="filename">index.html</div>
+
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>مثال لجافاسكربت</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="moment.min.js"></script>
-  <script src="script.js"></script>
-</head>
-<body>
-  <h1>مرحبا بكم!</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>مثال لجافاسكربت</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="moment.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>مرحبا بكم!</h1>
+  </body>
 </html>
+```
 
 لاحظوا بأننا قمنا بإضافة الملف _moment.min.js_ قبل الملف _script.js_ حتى نستطيع استخدام الدالة **moment** في شفرتنا البرمجية. هذا الترتيب ضروري وإلا سيظهر لنا الخطأ بعد التنفيذ.
 
-// script.js
-console.log("مرحبا في ملف الجافاسكربت!");
-console.log(moment().startOf('day').fromNow());
+<div class="filename">script.js</div>
+
+```js
+console.log('مرحبا في ملف الجافاسكربت!');
+console.log(
+  moment()
+    .startOf('day')
+    .fromNow()
+);
+```
 
 هكذا كنا نستخدم مكتبات الجافاسكريبت في مشاريعنا. الجميل في هذه الطريقة أنها سهلة الفهم والإستيعاب، والسيء فيها أن كل شيء يتم بشكل يدوي. فمثلا ماذا لو أردنا تحديث المكتبات التي نقوم باستخدامها في حال توفر تحديثات جديدة لها ؟ طبعا كنا نقوم بإعادة تحميل النسخة الأحدث ونعوض بها النسخة القديمة، **يدوياًّ**!
 
@@ -88,29 +106,35 @@ console.log(moment().startOf('day').fromNow());
 
 [اقرأ أيضا: ما هو Node.js وما هي مميزاته ؟](https://www.tutomena.com/web-development/javascript/what-is-nodejs/)
 
-[alert type="info" icon-size="normal"] يتم التعامل مع npm من نافذة الأوامر السطرية (command line)، وهي النافذة التي لم نكن قط نفتحها كمطوري واجهات أمامية. وهنا لا بد أن أنصح جميع المطورين المبتدئين بضرورة تعلم أساسيات التعامل مع الأوامر السطرية لأنها تستخدم بشكل كبير جدا في جميع مجالات البرمجة في وقتنا الحالي.[/alert]
+> يتم التعامل مع npm من نافذة الأوامر السطرية (command line)، وهي النافذة التي لم نكن قط نفتحها كمطوري واجهات أمامية. وهنا لا بد أن أنصح جميع المطورين المبتدئين بضرورة تعلم أساسيات التعامل مع الأوامر السطرية لأنها تستخدم بشكل كبير جدا في جميع مجالات البرمجة في وقتنا الحالي.
 
 لنرى كيفية استخدام مدير الحزم npm لتحميل مكتبة _Moment.js_ عوض تحميلها ذلك بشكل يدوي كما فعلنا سابقا. يجب تثبيت **Node.js** على حاسوبك، أتوماتيكيا سيتم تثبيت مدير الحزم **npm** كذلك. بعد ذلك سنفتح نافذة الأوامر السطرية، وانطلاقا منها ندخل للمجلد الذي يضم مشروعنا (حيث يوجد الملف _index.html_) ثم نقوم بتنفيذ الأمر التالي :
 
+```
 npm init
+```
 
 بعد التنفيذ، سيُطلَب منك الإجابة على عدد من الأسئلة (يمكنك فقط الضغط على الزر _Enter_ عند كل سؤال)، وبعدها سيتم توليد ملف اسمه **package.json** داخل نفس المجلد. هذا الملف يستخدمه مدير الحزم _npm_ للقيام بالعديد من المهام المتعلقة بهذا المشروع. المحتوى الإفتراضي لهذا الملف يكون على الشكل التالي :
 
+```json
 {
-"name": "your-project-name",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "",
-"license": "ISC"
+  "name": "your-project-name",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
+```
 
 الآن لتنزيل المكتبة _moment.js_، نقوم باستخدام الأمر السطري التالي :
 
+```
 npm install moment --save
+```
 
 هذا الأمر يقوم بشيئين اثنين :
 
@@ -119,20 +143,22 @@ npm install moment --save
 
 **أظنك الآن فهمت (ولو قليلا) الأكواد الموجودة في الصفحة الرئيسية لمكتبة moment.js عن كيفية تثبيتها (الصورة أعلاه) :)**
 
+```json
 {
-"name": "modern-javascript-example",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "",
-"license": "ISC",
-"dependencies": {
-"moment": "^2.19.1"
+  "name": "modern-javascript-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.19.1"
+  }
 }
-}
+```
 
 هذه الطريقة مفيدة، خاصة إذا أردنا فيما بعد مشاركة المشروع مع الآخرين، حيث نقوم بإرسال مجلد المشروع مع الملف _package.json_ من دون المجلد **node_modules** الذي قد يكون حجمه كبيرا بحسب حجم المشروع وعدد الحزم التي يستخدمها. بعد ذلك يكفي أن يقوم الآخر بتنفيذ الأمر **npm install** داخل المجلد وسيتم تحميل جميع حزم وتبعيات المشروع بشكل أوتوماتيكي.
 
@@ -140,22 +166,25 @@ npm install moment --save
 
 من الآن لن نقوم مجدد بتحميل مكتبات الجافاسكريبت بشكل يدوي، مدير الحزم npm يقوم بالمهمة بشكل جيد نيابة عنا.
 
-بالنظر في داخل المجلد node*modules سنجد الملف *moment.min.js* في المسار node_modules/moment/min. إذن سنقوم باستدعاء \_moment.min.js* في ملف _index.html_ كما يلي :
+بالنظر في داخل المجلد `node_modules` سنجد الملف `moment.min.js` في المسار `node_modules/moment/min`. إذن سنقوم باستدعاء `moment.min.js` في ملف `index.html` كما يلي :
 
-<!-- index.html -->
+<div class="filename">index.html</div>
+
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>مثال لجافاسكربت</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="node_modules/moment/min/moment.min.js"></script>
-  <script src="script.js"></script>
-</head>
-<body>
-  <h1>مرحبا بكم!</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>مثال لجافاسكربت</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="node_modules/moment/min/moment.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>مرحبا بكم!</h1>
+  </body>
 </html>
+```
 
 هذا جميل، استطعنا تحميل مكتبتنا بالإستعانة بمدير الحزم npm. ولكن مازلنا مطالبين بالدخول للمجلد **node_modules** والبحث عن ملف المكتبة ثم استدعاؤه بشكل يدوي في ملف html. نريد حلا يمكننا من استدعاء المكتبة بشكل أوتوماتيكي حينما نحتاجها:)
 
@@ -167,12 +196,19 @@ npm install moment --save
 
 في عام 2009، ظهر مشروع طموح اسمه **CommonJs** هدفه إتاحة نظام بيئي لجافاسكربت خارج المتصفحات. الجانب الكبير والأهم من مشروع CommonJs كان ذلك الجزء المتعلق باستيراد وتصدير (Import & Export Modules) الشفرة البرمجية عبر الملفات، والتخلص من إشكالية المتغيرات العامة. التنفيذ والتطبيق (_Implementation_) الأشهر لمشروع وحدات CommonJs هو Node.js.
 
-كما ذكرنا سابقا، **Node.js** هو بيئة جافاسكربت (_Javascript Runtime_) مصممة للإشتغال في الخوادم. سنرى فيما يلي كيف نعيد صياغة استدعاء مكتبة _Moment_ باستخدام طريقة الوحدات في _Node.js_. عوض استخدام الوسم <script> لإستدعاء المكتبة داخل ملف _index.html_، سنقوم باستدعائها مباشرة من داخل ملف الجافاسكريبت _script.js :_
+كما ذكرنا سابقا، **Node.js** هو بيئة جافاسكربت (_Javascript Runtime_) مصممة للإشتغال في الخوادم. سنرى فيما يلي كيف نعيد صياغة استدعاء مكتبة _Moment_ باستخدام طريقة الوحدات في _Node.js_. عوض استخدام الوسم `<script>` لإستدعاء المكتبة داخل ملف _index.html_، سنقوم باستدعائها مباشرة من داخل ملف الجافاسكريبت `script.js` :
 
-// script.js
+<div class="filename">script.js</div>
+
+```js
 var moment = require('moment');
-console.log("Hello from JavaScript!");
-console.log(moment().startOf('day').fromNow());
+console.log('Hello from JavaScript!');
+console.log(
+  moment()
+    .startOf('day')
+    .fromNow()
+);
+```
 
 هكذا تعمل الوحدات في _Node.js_، طبعا لأن الأخير يشتغل في الخوادم ويستطيع الوصول لنظام الملفات بالحاسوب ويعلم جيدا أين يجد الوحدة التي نقوم باستدعائها. فعوضا عن كتابة require('./node_modules/moment/min/moment.min.js) ، نقوم فقط بكتابة require('moment') .
 
@@ -186,68 +222,82 @@ console.log(moment().startOf('day').fromNow());
 
 لنأخذ نظرة عن كيفية الإستعانة ب _Webpack_ حتى نجعل المثال أعلاه (require('moment')) يعمل في المتصفح. أولا علينا تثبيت _Webpack_ في مشروعنا. _Webpack_ نفسه عبارة عن حزمة npm، لذلك سنقوم بتحميله وإضافته للمشروع تماما كما فعلنا مع مكتبة _moment.js_ قبل قليل :
 
+```
 npm install webpack --save-dev
+```
 
 لاحظ أننا استخدمنا البارامتر _\--save-dev_ عوض _\--save_ الذي استخدمناه سابقا مع *moment.js.* السبب أننا نريد حفظ _Webpack_ كتبعية خاصة فقط بمرحلة التطوير في ملف _package.json_ وليس تبعية للمشروع في مرحلة الإنتاج (_Production stage_). ملف _package.json_ تم تحديثه تلقائيا بعد تحميل _Webpack_ وأصبح على هذا النحو :
 
+```json
 {
-"name": "modern-javascript-example",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "",
-"license": "ISC",
-"dependencies": {
-"moment": "^2.19.1"
-},
-"devDependencies": {
-"webpack": "^3.7.1"
+  "name": "modern-javascript-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.19.1"
+  },
+  "devDependencies": {
+    "webpack": "^3.7.1"
+  }
 }
-}
+```
 
 الآن وقد قمنا بتثبيت Webpack بنجاح وتحميله على مجلد الحزم **node_modules** الخاص بمشروعنا، سيمكننا استخدامه من نافذة الأوامر السطرية بهذه الكيفية :
 
+```
 ./node_modules/.bin/webpack script.js bundle.js
+```
 
 هذا الأمر يقول لأداة _Webpack_ (الموجودة داخل المجلد _node_modules_ ) : خذ الملف _script.js_ وابحث فيه عن جميع التعابير التي تحتوي على دالة الإستيراد _require_ وقم باستبدالها بالشفرة البرمجية للوحدة التي تم استيرادها، ثم احفظ المخرج الجديد(_Output_) في ملف جديد اسمه _bundle.js_. يعني هذا أننا لن نستخدم من جديد الملف *script.js* في متصفحنا، بل نقوم عوضا عن ذلك باستدعاء الملف *bundle.js* المتوافق مع إمكانيات المتصفحات، أما *script.js* فنقوم باستخدامه فقط في مرحلة البرمجة والتطوير ولا يظهر في بيئة الإنتاج النهائية.
 
-<!-- index.html -->
+<div class="filename">index.html</div>
+
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>مثال لجافاسكربت</title>
-  <script src="bundle.js"></script>
-</head>
-<body>
-  <h1>مرحبا بكم!</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>مثال لجافاسكربت</title>
+    <script src="bundle.js"></script>
+  </head>
+  <body>
+    <h1>مرحبا بكم!</h1>
+  </body>
 </html>
+```
 
 بعد إعادة تحميل الصفحة على المتصفح، سنرى بأن كل شيء يعمل جيدا كما في السابق.
 
 يجب علينا إعادة تنفيذ الأمر السابق في كل مرة نقوم فيها بالتعديل على ملف _script.js_. هذا الأمر قد يكون مملا وغير عملي، خاصة عندما تزداد درجة تعقيد مهام Webpack في مشروعنا، فما رأيناه أعلاه يمكن اعتباره أبسط ما يمكن ل _Webpack_ القيام به. ربما يجدر بنا الآن اكتشاف الملف _webpack.config.js_ الذي يعتبر المكان الذي نقوم فيه بإضافة إعدادات _Webpack_ الخاصة بالمشروع. لنقم بإنشاء هذا الملف ونضيف إليه الإعدادات التالية :
 
-// webpack.config.js
+<div class="filename">webpack.config.js</div>
+
+```js
 module.exports = {
-entry: './script.js',
-output: {
-filename: 'bundle.js'
-}
+  entry: './script.js',
+  output: {
+    filename: 'bundle.js'
+  }
 };
+```
 
 الآن يمكننا تنفيذ نفس المهمة السابقة دون تحديد أسماء الملفين (_script.js_ و _bundle.js_ ) من الأمر السطري. يكفي تنفيذ ما يلي وسيقوم _Webpack_ بمعرفة ما يجب عليه فعله بالإعتماد على التوجيهات في ملف _webpack.config.js_ :
 
+```
 ./node_modules/.bin/webpack
+```
 
 تقدمنا خطوة إلى الأمام، ولكن لا يزال هذا مضجرا لأننا مازلنا مطالبين بتنفيذ الأمر في كل مرة نعدل فيها ملف _script.js._
 
 **سنجعل هذه المهمة أكثر سلاسة وتلقائية فيما بعد، قليلا من الصبر :D**
 
-لا بأس بما قمنا به لحد الساعدة، لم نعد نقوم باستدعاء المكتبات والسكريبتات الخارجية على شكل متغيرات ودوال عامة من خلال الوسم _<script>._ نحن الآن نعتمد على فلسفة الوحدات (_Modules_)، دون أن ننسى كذلك أننا في النهاية نحصل على **ملف جافاسكريبت واحد** وهذه نقطة إيجابية أخرى لتحسين أداء التطبيق.
+لا بأس بما قمنا به لحد الساعدة، لم نعد نقوم باستدعاء المكتبات والسكريبتات الخارجية على شكل متغيرات ودوال عامة من خلال الوسم `<script>`. نحن الآن نعتمد على فلسفة الوحدات (_Modules_)، دون أن ننسى كذلك أننا في النهاية نحصل على **ملف جافاسكريبت واحد** وهذه نقطة إيجابية أخرى لتحسين أداء التطبيق.
 
 سنواصل التقدم وإضافة مميزات أخرى قوية لبيئتنا التطويرية.
 
@@ -255,7 +305,7 @@ filename: 'bundle.js'
 
 مع التطور الكبير في لغة البرمجة جافاسكريبت في الأعوام الأخيرة، أصبح من الصعب على المتصفحات مواكبة هذه التطورات ودمج كل هذه الميزات الجديدة في بيئاتها التشغيلية (_Runtime_). فمثلا هناك عدد كبير جدا من ميزات إصدار الجافاسكريبت ES6 ليست مدعومة بعد من جميع المتصفحات الكبيرة، هذا يمنع المطورين من استخدامها والإستفادة من الإمكانية العظيمة التي تتيحها.
 
-لحسن الحظ، ظهرت في الفترة الماضية أدوات تعرف باسم **Javascript Transpilers **هدفها كتابة الجافاسكريبت بطريقة أكثر حداثة وانتاجية، وعند الإنتهاء من التكويد تتم عملية **Transpiling** التي تحول الشفرة البرمجية التي كتبها المطور إلى كود جافاسكريبت اعتيادي تفهمه وتدعمه جميع المتصفحات.
+لحسن الحظ، ظهرت في الفترة الماضية أدوات تعرف باسم **Javascript Transpilers** هدفها كتابة الجافاسكريبت بطريقة أكثر حداثة وانتاجية، وعند الإنتهاء من التكويد تتم عملية **Transpiling** التي تحول الشفرة البرمجية التي كتبها المطور إلى كود جافاسكريبت اعتيادي تفهمه وتدعمه جميع المتصفحات.
 
 **CoffeeScript** كان أول هذه الأدوات التي لقيت نجاحا كبيرا حيث يمكن من كتابة أكواد جافاسكريبت بطريقة حديثة وأكثر انتاجية. ولكن في الفترة الأخيرة خفت نجم _CoffeeScript_ وبرز في الساحة لاعبين جديدين استحوذا على أكبر نصيب من الكعكعة، نتحدث عن _Babel_ و _Typescript_.
 
@@ -265,7 +315,9 @@ filename: 'bundle.js'
 
 لنكتشف معا كيف يمكننا استخدام Babel في مشروعنا مع مجمع الوحدات Webpack. أولا علينا تحميل Babel من مدير الحزم npm بالطريقة التالية المعتادة (أصبحت معتادة الآن :D ) :
 
+```
 npm install babel-core babel-preset-env babel-loader --save-dev
+```
 
 لاحظ أننا قمنا بتحميل 3 حزم دفعة واحدة كتبعيات خاصة بمرحلة التطوير (_save-dev_) :
 
@@ -275,27 +327,30 @@ npm install babel-core babel-preset-env babel-loader --save-dev
 
 سنعدل على ملف الإعدادات _webpack.config.js_ حتى يمكن ل _Webpack_ استخدام Babel :
 
-// webpack.config.js
+<div class="filename">webpack.config.js</div>
+
+```js
 module.exports = {
-entry: './script.js',
-output: {
-filename: 'bundle.js'
-},
-module: {
-rules: [
-{
-test: /\.js\$/,
-exclude: /node_modules/,
-use: {
-loader: 'babel-loader',
-options: {
-presets: ['env']
-}
-}
-}
-]
-}
+  entry: './script.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js\$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env']
+          }
+        }
+      }
+    ]
+  }
 };
+```
 
 الشكل الجديد لهذا الملف قد يكون مربكا أو غير مفهوم بالنسبة لك، هذا طبيعي كونها المرة الأولى التي تتعامل فيها مع _Webpack_.
 
@@ -303,98 +358,118 @@ presets: ['env']
 
 الآن بتنا نستطيع البدء في كتابة أكواد الجافاسكريبت مع أحدث الميزات الجديدة في هذه اللغة. هذا مثال لكتابة كلاس جافاسكريبت على طريقة **ES2015** في ملف _script.js_ :
 
-// script.js
+<div class="filename">script.js</div>
+
+```js
 var moment = require('moment');
-console.log("Hello from JavaScript!");
-console.log(moment().startOf('day').fromNow());
+console.log('Hello from JavaScript!');
+console.log(
+  moment()
+    .startOf('day')
+    .fromNow()
+);
 
 class User {
-constructor(name) {
-this.name = name;
-}
-sayHi() {
-alert(this.name);
-}
+  constructor(name) {
+    this.name = name;
+  }
+  sayHi() {
+    alert(this.name);
+  }
 }
 
-let user = new User("Aissa");
+let user = new User('Aissa');
 user.sayHi();
+```
 
 نستطيع كذلك استخدام طريقة _ES2015_ في استيراد الوحدات عوض معيارية CommonJs التي رأيناها في السابق. هذه الطريقة هي التي تستعمل في جل المشاريع في الوقت الحالي :
 
-// script.js
+<div class="filename">script.js</div>
+
+```js
 import moment from 'moment';
-console.log("Hello from JavaScript!");
-console.log(moment().startOf('day').fromNow());
+console.log('Hello from JavaScript!');
+console.log(
+  moment()
+    .startOf('day')
+    .fromNow()
+);
 
 class User {
-constructor(name) {
-this.name = name;
-}
-sayHi() {
-alert(this.name);
-}
+  constructor(name) {
+    this.name = name;
+  }
+  sayHi() {
+    alert(this.name);
+  }
 }
 
-let user = new User("Aissa");
+let user = new User('Aissa');
 user.sayHi();
+```
 
-طريقة **import** الخاصة بإصدارات جافاسكريبت الحديثة لا تختلف كثيرا عن **require** التي استنبطها Node.js من مشروع CommonJs، غير أن الأولى -- أي _import_ -- تعتبر أكثر مرونة وسلاسة خاصة في الحالات المتقدمة.
+طريقة `import` الخاصة بإصدارات جافاسكريبت الحديثة لا تختلف كثيرا عن `require` التي استنبطها Node.js من مشروع CommonJs، غير أن الأولى -- أي _import_ -- تعتبر أكثر مرونة وسلاسة خاصة في الحالات المتقدمة.
 
 بما أننا قمنا بالتعديل على الملف _script.js_ فعلينا من جديد أن نطلب من *Webpack* أن يقوم بعملية التجميع (*Bundling)* :
 
+```
 ./node_modules/.bin/webpack
+```
 
 الآن يمكنك إعادة تحميل صفحة _index.html_، وسترى بأنها تعمل وفق المتوقع من دون مشاكل حتى في المتصفحات القديمة التي لا تدعم نهائيا ميزة الكلاسات في جافاسكريبت مثل انترنت إكسبلورر IE9.
 
 وإذا كنت فضوليا أكثر (مبروك إذا كان الحال كذلك) فستذهب للملف _bundle.js_ وتبحث عن الشكل الجديد للكلاس الذي قمت بكتابته سابقا في ملف _script.js_، هكذا أصبح حاله :
 
-//bundle.js
+<div class="filename">bundle.js</div>
+
+```js
 //...
-var \_createClass = function() {
-function defineProperties(target, props) {
-for (var i = 0; i < props.length; i++) {
-var descriptor = props[i];
-descriptor.enumerable = descriptor.enumerable || false;
-descriptor.configurable = true;
-if ("value" in descriptor) descriptor.writable = true;
-Object.defineProperty(target, descriptor.key, descriptor);
-}
-}
-return function(Constructor, protoProps, staticProps) {
-if (protoProps) defineProperties(Constructor.prototype, protoProps);
-if (staticProps) defineProperties(Constructor, staticProps);
-return Constructor;
-};
-}();
-
-function \_classCallCheck(instance, Constructor) {
-if (!(instance instanceof Constructor)) {
-throw new TypeError("Cannot call a class as a function");
-}
-}
-
-var User = function() {
-function User(name) {
-\_classCallCheck(this, User);
-
-        this.name = name;
+var _createClass = (function() {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ('value' in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
     }
+  }
+  return function(Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+})();
 
-    _createClass(User, [{
-        key: "sayHi",
-        value: function sayHi() {
-            alert(this.name);
-        }
-    }]);
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
 
-    return User;
+var User = (function() {
+  function User(name) {
+    _classCallCheck(this, User);
 
-}();
+    this.name = name;
+  }
 
-var user = new User("Aissa");
+  _createClass(User, [
+    {
+      key: 'sayHi',
+      value: function sayHi() {
+        alert(this.name);
+      }
+    }
+  ]);
+
+  return User;
+})();
+
+var user = new User('Aissa');
 user.sayHi();
 //...
+```
 
 نعم أعلم أن هذا الكود معقد أكثر وأقل جمالية، _Babel_ قام باستخدام الجافاسكريبت القديم (استخدام الدوال، تحويل let إلى var) حتى نحصل في الأخير على الشفرة البرمجية التي تفهمها جميع المتصفحات المعروفة.
 
@@ -410,36 +485,42 @@ user.sayHi();
 
 ولكن في الآونة الأخيرة، وبالخصوص منذ انفجار شعبية **React.js**، بات المطورون يستخدمون Webpack (الذي هو في الأصل مجمع وحدات Module Bundler وليس مشغل مهام Task Runner) في تنفيذ المهام بالإعتماد على أوامر NPM نفسه. هذه الأوامر تعرف باسم **NPM Scripts** ونصرح بها في ملف _package.json_ :
 
+```json
 {
-"name": "modern-javascript-example",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1",
-"build": "webpack -p",
-"watch": "webpack --watch"
-},
-"author": "",
-"license": "ISC",
-"dependencies": {
-"moment": "^2.19.1"
-},
-"devDependencies": {
-"babel-core": "^6.26.0",
-"babel-loader": "^7.1.2",
-"babel-preset-env": "^1.6.1",
-"webpack": "^3.7.1"
+  "name": "modern-javascript-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -p",
+    "watch": "webpack --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.19.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.7.1"
+  }
 }
-}
+```
 
 في هذا المثال، حددنا سكريبتين : build و watch. لتنفيذ السكريبت نقوم بإدخال الأمر **npm run** متبوع باسم السكريبت. على سبيل المثال، لتنفيذ السكريبت build نقوم بإدخال الأمر التالي في Command Line :
 
+```
 npm run build
+```
 
 هذا السكريبت يقوم بتشغيل _Webpack_ بالإعتماد على إعدادات ملف _webpack.config.js_، وأضفنا البارامتر **p-** الذي يقوم ل _Webpack_ بأننا نريد تجميع الكود لمرحلة الإنتاج (_Production_)، أي ضغطه (_Minify code_).
 
+```
 npm run watch
+```
 
 أما السكريبت watch فيشغل _Webpack_ في كل مرة نقوم فيها بعملية بالتعديل. يعني لن نظطر من الآن لكتابة الأمر في واجهة الأوامر السطرية بعد كل تعديل. خطوة عملية للغاية في مرحلة التطوير :)
 
@@ -449,38 +530,44 @@ npm run watch
 
 الآن تعلمون كيف تقومون بتحميل هذه الأداة، أحسنتم، الطريقة هي :
 
+```
 npm install webpack-dev-server --save-dev
+```
 
 بعد ذلك قم بإضافة سكريبت جديد لملف _package.json_ بهذه الكيفية :
 
+```json
 {
-"name": "modern-javascript-example",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1",
-"build": "webpack -p",
-"watch": "webpack --watch",
-"server": "webpack-dev-server --open"
-},
-"author": "",
-"license": "ISC",
-"dependencies": {
-"moment": "^2.19.1"
-},
-"devDependencies": {
-"babel-core": "^6.26.0",
-"babel-loader": "^7.1.2",
-"babel-preset-env": "^1.6.1",
-"webpack": "^3.7.1",
-"webpack-dev-server": "^2.7.1"
+  "name": "modern-javascript-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -p",
+    "watch": "webpack --watch",
+    "server": "webpack-dev-server --open"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.19.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.7.1",
+    "webpack-dev-server": "^2.7.1"
+  }
 }
-}
+```
 
 الآن يمكنك بدء تشغيل خادم التطوير الخاص بمشروعك بهذه الطريقة :
 
+```
 npm run server
+```
 
 هذه الأمر يقوم بفتح الصفحة _index.html_ في متصفحك مع عنوان محلي افتراضي _localhost:8080_، وكلما عدلت على الملف _script.js_ يقوم _webpack-dev-server_ بإعادة جمع ال **Bundle** وتحديث حالة الصفحة في المتصفح بشكل تلقائي. هذا يوفر وقتا ثمينا على المطورين ما يجعلهم يركزون أكثر على عملهم في كتابة كود جيد عوض الإنتقال بين المتصفح والمحرر بعد كل تعديل.
 
@@ -494,7 +581,7 @@ npm run server
 
 معظم مكتبات وأطر عمل الجافاسكريبت المعمول بها اليوم، تضع بين أيدي المطورين أدوات تجعلهم يبدؤون عملية التكويد مباشرة دون الدخول في صداع الإعدادات من الصفر. هناك حزمة [create-react-app](https://github.com/facebookincubator/create-react-app) لمطوري React.js، و [angular-cli](https://cli.angular.io/) لعشاق Angular، إضافة ل [vue-cli](https://github.com/vuejs/vue-cli) للمتيمين بإطار العمل Vue.js.
 
-[caption id="attachment_2914" align="aligncenter" width="710"]![Angular CLI](../images/angular-cli.png)](../images/angular-cli.png) Angular CLI\
+![Angular CLI](../images/angular-cli.png) Angular CLI
 
 كل هذه الأدوات تمكن من تحميل جميع تبعيات المشروع مع كافة الإعدادات البدئية. في بعض الأحيان، قد تحتاج لإضافة بعض الإعدادات الخاصة بمشروعك، لهذا يستحسن دائما الإلمام بأساسيات التقنيات التي ذكرنا في هذا المقال الشامل حتى تستطيع تدبر أمورك في الحالات الشاذة.
 
