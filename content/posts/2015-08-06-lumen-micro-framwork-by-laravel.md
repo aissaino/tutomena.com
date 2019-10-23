@@ -1,17 +1,17 @@
 ---
-title: ""لومن" إطار عمل جديد من فريق لارافيل Laravel"
-date: "2015-08-06"
-slug: "web-development/php/lumen-micro-framwork-by-laravel"
-template: "post"
-categories: 
+title: '"لومن" إطار عمل جديد من فريق لارافيل Laravel'
+date: '2015-08-06'
+slug: 'web-development/php/lumen-micro-framwork-by-laravel'
+template: 'post'
+categories:
   - PHP
   - مقالات
-tags: 
+tags:
   - laravel
   - lumen
   - silex
   - slim
-thumbnail: "../thumbnails/laravel.png"
+thumbnail: '../thumbnails/laravel.png'
 ---
 
 يعتبر **لومن Lumen** من إطارات العمل التي ظهرت مؤخرا على يد فريق لارافيل **Laravel** المعروف. قد تتساءلون لماذا يقوم هذا الفريق بتطوير إطار عمل ثاني مادام هنالك الفريم وورك الدائع الصيت لارافيل، الجواب هو أن لومن يختلف عن لارافيل، إنه إطارعمل صغير Micro-Framework طور خصيصا للتطبيقات الصغيرة والبسيطة مثل ال APIs و Web Services.
