@@ -1,5 +1,5 @@
-const urljoin = require('url-join')
-const config = require('./data/SiteConfig')
+const urljoin = require('url-join');
+const config = require('./data/SiteConfig');
 
 module.exports = {
   pathPrefix: config.pathPrefix === '' ? '/' : config.pathPrefix,
@@ -10,8 +10,11 @@ module.exports = {
       feed_url: urljoin(config.siteUrl, config.pathPrefix, config.siteRss),
       title: config.siteTitle,
       description: config.siteDescription,
-      image_url: `${urljoin(config.siteUrl, config.pathPrefix)}/logos/logo-48.png`,
-    },
+      image_url: `${urljoin(
+        config.siteUrl,
+        config.pathPrefix
+      )}/logos/logo-48.png`
+    }
   },
   plugins: [
     'gatsby-plugin-sass',
@@ -23,29 +26,29 @@ module.exports = {
         headers: {
           '/*.js': ['cache-control: public, max-age=31536000, immutable'],
           '/*.css': ['cache-control: public, max-age=31536000, immutable'],
-          '/sw.js': ['cache-control: public, max-age=0, must-revalidate'],
-        },
-      },
+          '/sw.js': ['cache-control: public, max-age=0, must-revalidate']
+        }
+      }
     },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'assets',
-        path: `${__dirname}/static/`,
-      },
+        path: `${__dirname}/static/`
+      }
     },
     {
       resolve: 'gatsby-plugin-typography',
       options: {
-        pathToConfigModule: `${__dirname}/src/utils/typography.js`,
-      },
+        pathToConfigModule: `${__dirname}/src/utils/typography.js`
+      }
     },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'posts',
-        path: `${__dirname}/content/`,
-      },
+        path: `${__dirname}/content/`
+      }
     },
     {
       resolve: 'gatsby-transformer-remark',
@@ -54,8 +57,8 @@ module.exports = {
           {
             resolve: 'gatsby-remark-images',
             options: {
-              maxWidth: 850,
-            },
+              maxWidth: 850
+            }
           },
           'gatsby-remark-prismjs',
           'gatsby-remark-copy-linked-files',
@@ -64,23 +67,23 @@ module.exports = {
             options: {
               offsetY: `100`,
               maintainCase: false,
-              removeAccents: true,
-            },
-          },
-        ],
-      },
+              removeAccents: true
+            }
+          }
+        ]
+      }
     },
     {
       resolve: 'gatsby-plugin-google-analytics',
       options: {
-        trackingId: config.googleAnalyticsID,
-      },
+        trackingId: config.googleAnalyticsID
+      }
     },
     {
       resolve: 'gatsby-plugin-nprogress',
       options: {
-        color: config.themeColor,
-      },
+        color: config.themeColor
+      }
     },
     'gatsby-plugin-sharp',
     `gatsby-transformer-sharp`,
@@ -100,24 +103,24 @@ module.exports = {
           {
             src: '/logos/logo-48.png',
             sizes: '48x48',
-            type: 'image/png',
+            type: 'image/png'
           },
           {
             src: '/logos/logo-1024.png',
             sizes: '1024x1024',
-            type: 'image/png',
-          },
-        ],
-      },
+            type: 'image/png'
+          }
+        ]
+      }
     },
     {
       resolve: 'gatsby-plugin-feed',
       options: {
         setup(ref) {
-          const ret = ref.query.site.siteMetadata.rssMetadata
-          ret.allMarkdownRemark = ref.query.allMarkdownRemark
-          ret.generator = 'Tania Rascia'
-          return ret
+          const ret = ref.query.site.siteMetadata.rssMetadata;
+          ret.allMarkdownRemark = ref.query.allMarkdownRemark;
+          ret.generator = 'مدونة توتومينا';
+          return ret;
         },
         query: `
         {
@@ -137,7 +140,7 @@ module.exports = {
         feeds: [
           {
             serialize(ctx) {
-              const { rssMetadata } = ctx.query.site.siteMetadata
+              const { rssMetadata } = ctx.query.site.siteMetadata;
               return ctx.query.allMarkdownRemark.edges.map(edge => ({
                 categories: edge.node.frontmatter.tags,
                 date: edge.node.fields.date,
@@ -147,9 +150,9 @@ module.exports = {
                 guid: rssMetadata.site_url + edge.node.fields.slug,
                 custom_elements: [
                   { 'content:encoded': edge.node.html },
-                  { author: config.userEmail },
-                ],
-              }))
+                  { author: config.userEmail }
+                ]
+              }));
             },
             query: `
             {
@@ -179,10 +182,17 @@ module.exports = {
               }
             }
           `,
-            output: config.siteRss,
-          },
-        ],
-      },
+            output: config.siteRss
+          }
+        ]
+      }
     },
-  ],
-}
+    {
+      resolve: 'gatsby-plugin-mailchimp',
+      options: {
+        endpoint:
+          'https://tutomena.us5.list-manage.com/subscribe/post?u=72334ecc8f3dbf8dcc09abcef&id=1413753173' // add your MC list endpoint here; see instructions below
+      }
+    }
+  ]
+};

@@ -45,7 +45,8 @@ $dark-border: darken($background, 3%);
       a.view-all {
         background: rgba(0, 0, 0, 0.2);
         color: darken($foreground, 10%);
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           background: black;
           color: $foreground;
         }
@@ -399,7 +400,7 @@ $dark-border: darken($background, 3%);
       padding: 0.5rem 1rem;
       background: rgba(0, 0, 0, 0.2);
       border-radius: $border-radius;
-      margin-right: 0.5rem;
+      margin-left: 0.5rem;
       font-weight: 600;
       color: $primary-color;
       cursor: pointer;
@@ -410,7 +411,7 @@ $dark-border: darken($background, 3%);
       }
 
       &:last-of-type {
-        margin-right: 0;
+        margin-left: 0;
       }
 
       &:hover {

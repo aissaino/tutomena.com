@@ -1,24 +1,14 @@
 ---
-title: Contact
+title: اتصل بنا
 slug: contact
 template: page
 ---
 
-I build open-source projects and write about modern JavaScript, Node.js, design and web development.
+سنكون سعداء جدا بالإستماع لإقتراحاتكم وملاحظاتم حول موقع توتومينا والدروس التي نقترحها على موقعنا.
+يمكنكم كذلك اقتراح الدروس التي تودون أن نتطرق إليها في قادم الأيام وسنحاول قدر المستطاع تلبية جميع طلباتكم.
 
-<div class="centered-iframe">
-  <iframe
-    width="480"
-    height="150"
-    src="https://taniarascia.substack.com/embed"
-    frameborder="0"
-    scrolling="no"
-  ></iframe>
-</div>
+يمكنكم الإتصال بنا بواسطة إحدى الطرق التالية:
 
-### Around the web
-
-- **Email**: [tania@taniarascia.com](mailto:tania[AT]taniarascia[DOT]com)
-- **GitHub**: [taniarascia](https://github.com/taniarascia)
-- **Twitter**: [taniarascia](https://twitter.com/taniarascia)
-- **Feed**: [RSS](https://www.taniarascia.com/rss.xml)
+- **بريدنا الإلكتروني**: [contact@tutomena.com](mailto:contact@tutomena.com)
+- **حسابنا على تويتر**: [tutomena](https://twitter.com/tutomena)
+- **حسابنا على فيسبوك**: [tutomena](https://facebook.com/tutomena)

@@ -5,8 +5,10 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font: $font-style $font-variant $font-weight #{$font-size}/#{$line-height} $font-family;
+  font: $font-style $font-variant $font-weight #{$font-size}/#{$line-height}
+    $font-family;
   font-size: 84% !important;
+  direction: rtl;
 }
 
 // Body base
@@ -27,7 +29,8 @@ ul,
 dl,
 table {
   margin: 0 0 1.5rem 0;
-  font-size: 1.15rem;
+  font-size: 1.4rem;
+  line-height: 1.9em;
 }
 
 @include small-breakpoint {
@@ -37,7 +40,8 @@ table {
   dl,
   table {
     margin: 0 0 2rem 0;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    line-height: 1.9em;
   }
 }
 
@@ -166,7 +170,7 @@ ul {
     &:before {
       content: '\2022 ';
       position: absolute;
-      left: 0;
+      right: 0;
       color: lighten($font-color, 30%);
       font-size: 22px;
       line-height: 1.1;
@@ -183,8 +187,8 @@ ul {
 @include small-breakpoint {
   ul {
     li {
-      padding-left: 1.5rem;
-      margin-left: 1.5rem;
+      padding-right: 1.5rem;
+      margin-right: 1.5rem;
     }
   }
 }
@@ -200,6 +204,10 @@ a {
   &:focus {
     color: $link-hover-color;
   }
+}
+
+.post {
+  margin-bottom: 4rem;
 }
 
 .post,
@@ -233,7 +241,7 @@ mark {
 
 strong,
 b {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 // Keyboard input
@@ -270,4 +278,33 @@ dd {
 
 [type='checkbox'] {
   margin-right: 1rem;
+}
+
+.newsletter-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  width: 100%;
+  border: 1px solid #e1e7f4;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-align: center;
+
+  form {
+    width: 65%;
+    margin-bottom: 0;
+    .button {
+      margin-bottom: 0;
+    }
+    input {
+      margin-bottom: 1rem;
+    }
+  }
 }

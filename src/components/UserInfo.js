@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import tania from '../../content/images/tania-avatar.jpg'
-import patreon from '../../content/thumbnails/patreon.png'
-import kofi from '../../content/thumbnails/kofi.png'
+import React, { Component } from 'react';
+import aissa from '../../content/thumbnails/aissa-avatar.png';
+/* import patreon from '../../content/thumbnails/patreon.png';
+import kofi from '../../content/thumbnails/kofi.png'; */
 
 export default class UserInfo extends Component {
   render() {
@@ -10,19 +10,17 @@ export default class UserInfo extends Component {
         <div className="container note-container">
           <div className="flex-author">
             <div className="flex-avatar">
-              <img className="avatar" src={tania} alt="Tania Rascia" />
+              <img className="avatar" src={aissa} alt="عيسى محمد علي" />
             </div>
             <div>
+              <h3 style={{ marginBottom: '1.2rem' }}>عيسى محمد علي</h3>
               <p>
-                I’m Tania Rascia. I document everything I learn and help thousands of people start
-                coding careers.{' '}
-                <strong>
-                  My site has no ads, sponsors, or bullshit. If you enjoy my content, please
-                  consider supporting what I do.
-                </strong>
+                بدأت الإحتراف في مجال برمجيات الويب منذ عام 2010، وأسعى لنقل
+                خبراتي المتواضعة لإخواني العرب من المحيط إلى الخليج، راجيا من
+                الله أن يجعل عملي هذا في ميزان حسناتي.
               </p>
 
-              <div className="flex">
+              {/* <div className="flex">
                 <a
                   href="https://ko-fi.com/taniarascia"
                   className="donate-button"
@@ -40,11 +38,11 @@ export default class UserInfo extends Component {
                 >
                   <img src={patreon} height="50" width="50" /> Become a Patron
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </aside>
-    )
+    );
   }
 }

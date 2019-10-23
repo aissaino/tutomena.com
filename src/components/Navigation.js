@@ -1,46 +1,46 @@
-import React, { Component } from 'react'
-import { Link } from 'gatsby'
-import floppy from '../images/floppy.png'
-import sun from '../images/sun.svg'
-import moon from '../images/moon.svg'
-import kofi from '../../content/thumbnails/kofi.png'
-import ThemeContext from '../context/ThemeContext'
+import React, { Component } from 'react';
+import { Link } from 'gatsby';
+import tutomena from '../images/tutomena.png';
+import sun from '../images/sun.svg';
+import moon from '../images/moon.svg';
+import kofi from '../../content/thumbnails/kofi.png';
+import ThemeContext from '../context/ThemeContext';
 
 export default class Navigation extends Component {
-  static contextType = ThemeContext
+  static contextType = ThemeContext;
 
   state = {
-    scrolled: false,
-  }
+    scrolled: false
+  };
 
   componentDidMount() {
-    window.addEventListener('scroll', this.navOnScroll)
+    window.addEventListener('scroll', this.navOnScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.navOnScroll)
+    window.removeEventListener('scroll', this.navOnScroll);
   }
 
   navOnScroll = () => {
     if (window.scrollY > 20) {
-      this.setState({ scrolled: true })
+      this.setState({ scrolled: true });
     } else {
-      this.setState({ scrolled: false })
+      this.setState({ scrolled: false });
     }
-  }
+  };
 
   render() {
-    const { scrolled } = this.state
-    const { menuLinks } = this.props
-    const theme = this.context
+    const { scrolled } = this.state;
+    const { menuLinks } = this.props;
+    const theme = this.context;
 
     return (
       <nav className={scrolled ? 'nav scroll' : 'nav'}>
         <div className="nav-container">
           <div className="brand">
             <Link to="/">
-              <img src={floppy} className="favicon" alt="Floppy Diskette" />
-              <span className="text">Tania Rascia</span>
+              <img src={tutomena} className="favicon" alt="مدونة توتومينا" />
+              <span className="text">مدونة توتومينا</span>
             </Link>
           </div>
           <div className="links">
@@ -50,7 +50,12 @@ export default class Navigation extends Component {
               </Link>
             ))}
             <div className="cta">
-              <button className="dark-switcher" onClick={theme.toggleDark} aria-label="Toggle Dark Mode." title="Toggle Dark Mode">
+              <button
+                className="dark-switcher"
+                onClick={theme.toggleDark}
+                aria-label="Toggle Dark Mode."
+                title="Toggle Dark Mode"
+              >
                 {theme.dark ? (
                   <img src={sun} className="theme-icon" alt="Light Mode" />
                 ) : (
@@ -58,7 +63,7 @@ export default class Navigation extends Component {
                 )}
               </button>
             </div>
-            <a
+            {/* <a
               className="kofi-button"
               target="_blank"
               rel="noopener noreferrer"
@@ -67,10 +72,10 @@ export default class Navigation extends Component {
               title="Buy me a coffee!"
             >
               <img src={kofi} alt="Kofi" className="kofi" />
-            </a>
+            </a> */}
           </div>
         </div>
       </nav>
-    )
+    );
   }
 }

@@ -1,7 +1,17 @@
 /*! Primitive
   by Tania Rascia */
 
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+/* @import url('https://fonts.googleapis.com/css?family=Markazi+Text:400,500,600,700&display=swap'); */
+
+@font-face {
+  font-family: 'HelveticaNeueLTRoman';
+  src: url('../fonts/HelveticaNeueLTRoman.woff');
+}
+
+@font-face {
+  font-family: 'HelveticaNeueLTBold';
+  src: url('../fonts/HelveticaNeueLTBold.woff');
+}
 
 // Configuration
 @import 'base/variables';
