@@ -1,14 +1,14 @@
 ---
-title: "فيسبوك تبدأ الإعتماد على زر "أعجبني" لإستهدافك بإعلانات موجهة"
-date: "2015-09-18"
-slug: "news/a-new-way-to-control-the-ads-you-see-on-facebook"
-template: "post"
-categories: 
+title: 'فيسبوك تبدأ الإعتماد على زر "أعجبني" لإستهدافك بإعلانات موجهة'
+date: '2015-09-18'
+slug: 'news/a-new-way-to-control-the-ads-you-see-on-facebook'
+template: 'post'
+categories:
   - أخبار
-tags: 
+tags:
   - إعلانات
   - فيسبوك
-thumbnail: "../thumbnails/facebook.png"
+thumbnail: '../thumbnails/facebook.png'
 ---
 
 أكدت شركة فيسبوك في [بيان لها على موقعها الرسمي](https://www.facebook.com/notes/facebook-and-privacy/a-new-way-to-control-the-ads-you-see-on-facebook/926372204079329) أنها ستبدأ سياسة جديدة في عرض الإعلانات لمستعلمي موقع التواصل الإجتماعي الأول على مستوى العالم. فيسبوك ستعتمد في هذه السياسة الجديدة على أزرار "أعجبني" و "مشاركة" من أجل استهداف الإعلانات التي تهم الزائر عوض عرض إعلانات بطريقة عشوائية غير موجهة.
