@@ -13,8 +13,6 @@ const config = {
   siteRss: '/rss.xml',
   googleAnalyticsID: 'UA-60278591-1',
   postDefaultCategoryID: 'تقنية',
-  newsletter: 'https://taniarascia.substack.com',
-  newsletterEmbed: 'https://taniarascia.substack.com/embed',
   userName: 'عيسى',
   userEmail: 'contact@tutomena.com',
   userTwitter: 'tutomena',
