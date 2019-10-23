@@ -9,6 +9,7 @@ import SEO from '../components/SEO';
 import config from '../../data/SiteConfig';
 import { formatDate, editOnGithub } from '../utils/global';
 import NewsletterForm from '../components/NewsletterForm';
+import { DiscussionEmbed } from 'disqus-react';
 
 export default class PostTemplate extends Component {
   constructor(props) {
@@ -27,6 +28,12 @@ export default class PostTemplate extends Component {
     const popular = postNode.frontmatter.categories.find(
       category => category === 'Popular'
     );
+
+    const disqusConfig = {
+      shortname: config.gatsby_disqus_name,
+      config: { identifier: slug }
+    };
+
     let thumbnail;
 
     if (!post.id) {
@@ -84,6 +91,9 @@ export default class PostTemplate extends Component {
             dangerouslySetInnerHTML={{ __html: postNode.html }}
           />
         </article>
+        <div className="container comments">
+          <DiscussionEmbed {...disqusConfig} />
+        </div>
         <div className="container">
           <NewsletterForm />
         </div>

@@ -16,6 +16,7 @@ const config = {
   userName: 'عيسى',
   userEmail: 'contact@tutomena.com',
   userTwitter: 'tutomena',
+  gatsby_disqus_name: 'tutomena',
   menuLinks: [
     {
       name: 'عن توتومينا ؟',
