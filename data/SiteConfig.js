@@ -3,7 +3,7 @@ const config = {
   siteTitleShort: 'مدونة توتومينا',
   siteTitleAlt: 'مدونة توتومينا',
   siteLogo: '/logos/logo-1024.png',
-  siteUrl: 'http://localhost:8000',
+  siteUrl: 'https://www.tutomena.com',
   repo: 'https://github.com/aissa-bouguern/tutomena.com',
   pathPrefix: '',
   dateFromFormat: 'YYYY-MM-DD',
