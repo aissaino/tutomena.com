@@ -6,11 +6,13 @@
 @font-face {
   font-family: 'HelveticaNeueLTRoman';
   src: url('../fonts/HelveticaNeueLTRoman.woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'HelveticaNeueLTBold';
   src: url('../fonts/HelveticaNeueLTBold.woff');
+  font-display: swap;
 }
 
 // Configuration
