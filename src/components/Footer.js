@@ -16,6 +16,7 @@ export default class Footer extends Component {
             Patreon
           </a> */}
           <Link to="/newsletter">النشرة البريدية</Link>
+          <Link to="/privacy-policy">سياسة الخصوصية</Link>
           <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
             RSS
           </a>
