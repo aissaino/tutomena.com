@@ -81,7 +81,7 @@ export default class Index extends Component {
                   الحصرية، وكذلك عروض العمل من شركائنا الذين يثقون في جمهور
                   مدونة توتومينا.
                 </p>
-                <a className="button" href="https://taniarascia.substack.com">
+                <a className="button" href="/newsletter">
                   أريد الإشتراك
                 </a>
               </div>
