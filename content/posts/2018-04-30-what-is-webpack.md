@@ -32,26 +32,31 @@ thumbnail: '../thumbnails/webpack.png'
 
 لنعد قليلا إلى الماضي القريب، لنرى كيف كنا نقوم بإدارة التبعيات في مشاريعنا.
 
-الطريقة الشائعة في تلك الأيام كانت إضافة ملفات الجافاسكريبت واحدا تلو الآخر ـ مع مراعاة الترتيب ـ عن طريق الوسم <script> وذلك قبل إغلاق الوسم <body> :
+الطريقة الشائعة في تلك الأيام كانت إضافة ملفات الجافاسكريبت واحدا تلو الآخر ـ مع مراعاة الترتيب ـ عن طريق الوسم `<script>` وذلك قبل إغلاق الوسم `<body>` :
 
+```html
 <script src="jquery.min.js"></script>
 <script src="jquery.some.plugin.js"></script>
 <script src="script.js"></script>
+```
 
 هذه الطريقة غير جيدة لعدة أسباب، أولا أننا نقوم بعدة طلبات HTTP لجلب الملفات المعنية، ما يعني استهلاكا أكثر للخادم والزيادة في وقت تحميل الصفحة.
 
 لتجاوز مشكل تعدد طلبات HTTP تم التفكير في جمع أكواد وملفات لجافاسكريبت كلها في ملف واحد باستخدام **Grunt** أو **Gulp**.
 
+```js
 // جمع الملفات
-var scripts = [
-'jquery.min.js',
-'jquery.some.plugin.js',
-'main.js'
-].concat().uglify().writeTo('bundle.js');
+var scripts = ['jquery.min.js', 'jquery.some.plugin.js', 'main.js']
+  .concat()
+  .uglify()
+  .writeTo('bundle.js');
+```
 
-// الملف الذي يتم بناؤه واستدعاؤه
+الملف الذي يتم بناؤه واستدعاؤه
 
+```html
 <script src="bundle.js"></script>
+```
 
 نحن الآن قمنا بحل مشكل تعدد الملفات المحملة، ولكن لا نزال نواجه مشاكل أخرى متعقلة أولا بالترتيب الواجب مراعاته قبل جمع الملفات، ثم المشكل الأكبر وهو الإستعانة **بالمتغيرات العامة** ( _Global variables_ ) وبالتالي خطورة وإمكانية حدوث تعارض بينها.
 
@@ -65,12 +70,18 @@ var scripts = [
 
 اعتمد Browserify على طريقة **CommonJS** في عملية تصدير واستيراد وحدات الجافاسكريبت المكونة للتطبيق، على شاكلة Node.js، أي باستخدام الدالة **()require**.
 
-// config.db.js
-module.exports = { driver: "mysql" };
+<div class="filename">config.db.js</div>
 
-// app.js
-var config = require('./config.db.js');  
+```js
+module.exports = { driver: 'mysql' };
+```
+
+<div class="filename">app.js</div>
+
+```js
+var config = require('./config.db.js');
 console.log('Database Driver : ', config.driver);
+```
 
 بهذا تم تجاوز مشكل عدم دعم المتصفحات لخاصية الوحدات في جافاسكريبت. ولعب بذلك **Browserify** دورا هاما في استنساخ واحدة من أهم مزايا _Node.js_ ونقلها لعالم المتصفحات.
 
@@ -80,35 +91,40 @@ console.log('Database Driver : ', config.driver);
 
 أما Webpack، وهذه هي ميزته الأساسية، فيجعل في استطاعتنا استيراد جميع أنواع تبعيات المشروع (ليس الجافاسكريبت فقط) من صور، خطوط، ملفات CSS قد تكون على شكل SASS أو LESS... ففي التطبيقات الحديثة، مثل تطبيقات React.js، التي تعتمد على مفهوم المكونات أو Components قد نرى فيها أكوادا من هذا القبيل :
 
-require('./stylesheets/main.scss')
+```js
+require('./stylesheets/main.scss');
+```
 
-وفي ملف ملف إعدادات ويب باك _webpack.config.js_، نقوم باخبار Webpack بأن يقوم بتحويل العبارة أعلاه إلى أكواد CSS وإضافتها لوسم <style> في الصفحة عن طريق ما يعرف في عالم Webpack ب **Loaders**. في حالتنا نقوم باستخدام 3 من Loaders هي **style-loader** ،**css-loader** ،**sass-loader** بعد أن نقوم بتثبيتها في المشروع عن طريق مدير الحزم npm.
+وفي ملف ملف إعدادات ويب باك `webpack.config.js`، نقوم باخبار Webpack بأن يقوم بتحويل العبارة أعلاه إلى أكواد CSS وإضافتها لوسم `<style>` في الصفحة عن طريق ما يعرف في عالم Webpack ب **Loaders**. في حالتنا نقوم باستخدام 3 من Loaders هي **style-loader** ،**css-loader** ،**sass-loader** بعد أن نقوم بتثبيتها في المشروع عن طريق مدير الحزم npm.
 
+```js
 module: {
-rules: [
-...
-{
-test: /\.scss\$/,
-use: [
-{
-loader: "style-loader" // creates style nodes from JS strings
-},
-{
-loader: "css-loader" // translates CSS into CommonJS
-},
-{
-loader: "sass-loader" // compiles Sass to CSS
+  rules: [
+    ...{
+      test: /\.scss\$/,
+      use: [
+        {
+          loader: 'style-loader' // creates style nodes from JS strings
+        },
+        {
+          loader: 'css-loader' // translates CSS into CommonJS
+        },
+        {
+          loader: 'sass-loader' // compiles Sass to CSS
+        }
+      ]
+    }
+  ];
 }
-]
-}
-]
-}
+```
 
 نفس الكلام يقال عن الصور، فلا تستغرب عندما تجد هذا الكود في أحد المشاريع :
 
-<img src={ require('../../assets/test.jpg') } />
+```js
+<img src={require('../../assets/test.jpg')} />
+```
 
-**ويب باك** يقوم بالبحث في الملف ليجد الدالة **()require** فيقوم بتعويضها بما يناسب (رابط الصورة مثلا) بحسب ال **Loader** المستخدم، في حالة الصور يتم استخدام loader اسمه **file-loader، **ثم بعد ذلك يمكن أن نقول ل Webpack بأن يقوم بنقل الصورة إلى مجلد خاص، مثلا **public/**. **هذا يعني بأن Webpack لا يقوم فقط بعملية بناء وتجميع الحزم والوحدات، بل يستطيع كذلك التحكم في نظام ملفات المشروع بشكل كامل بحسب إعداداتنا**. وبالتالي فإن **ويب باك** جمع بين مزايا مشغلات المهام مثل Gulp و Grunt وكذلك محزمات الوحدات مثل Browserify.
+**ويب باك** يقوم بالبحث في الملف ليجد الدالة `()require` فيقوم بتعويضها بما يناسب (رابط الصورة مثلا) بحسب ال **Loader** المستخدم، في حالة الصور يتم استخدام loader اسمه `file-loader`، ثم بعد ذلك يمكن أن نقول ل Webpack بأن يقوم بنقل الصورة إلى مجلد خاص، مثلا `public/`. **هذا يعني بأن Webpack لا يقوم فقط بعملية بناء وتجميع الحزم والوحدات، بل يستطيع كذلك التحكم في نظام ملفات المشروع بشكل كامل بحسب إعداداتنا**. وبالتالي فإن **ويب باك** جمع بين مزايا مشغلات المهام مثل Gulp و Grunt وكذلك محزمات الوحدات مثل Browserify.
 
 ## النهاية
 
