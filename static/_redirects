@@ -3,3 +3,4 @@
 /articles/trois-nouvautes-majeurs-de-drupal-8/               /blog/
 /wp-content/*             /
 https://tutomena.netlify.com/*  https://www.tutomena.com/:splat 301!
+https://www.tutomena.com/*/amp  https://www.tutomena.com/:splat 301!
