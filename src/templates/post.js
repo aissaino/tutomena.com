@@ -72,7 +72,7 @@ export default class PostTemplate extends Component {
                 <a className="twitter-link" href={twitterShare}>
                   شارك على تويتر
                 </a>
-                /
+                {/* /
                 <a
                   className="github-link"
                   href={githubLink}
@@ -80,7 +80,7 @@ export default class PostTemplate extends Component {
                   rel="noopener noreferrer"
                 >
                   تحرير ✏️
-                </a>
+                </a> */}
               </div>
               <PostTags tags={post.tags} />
             </div>
@@ -91,8 +91,10 @@ export default class PostTemplate extends Component {
             dangerouslySetInnerHTML={{ __html: postNode.html }}
           />
         </article>
-        <div className="container comments">
-          <DiscussionEmbed {...disqusConfig} />
+        <div className="container">
+          <div className="comments">
+            <DiscussionEmbed {...disqusConfig} />
+          </div>
         </div>
         <div className="container">
           <NewsletterForm />
