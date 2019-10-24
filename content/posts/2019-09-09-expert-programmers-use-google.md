@@ -11,7 +11,7 @@ tags:
 thumbnail: '../thumbnails/google.png'
 ---
 
-يجيب على هذا السؤال **Xavier Amatriain**، مهندس سابق في شركة غوغل.
+> يجيب على هذا السؤال **Xavier Amatriain**، مهندس سابق في شركة غوغل.
 
 الجواب باختصار هو: نعم!
 

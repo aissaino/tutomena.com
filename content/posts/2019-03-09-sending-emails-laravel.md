@@ -18,7 +18,7 @@ thumbnail: '../thumbnails/php.png'
 
 أول خطوة سنقوم بها بطبيعة الحال هي إنشاء مشروع لارافيل من الصفر، وليكن اسمه مثلا laravel-mailable:
 
-```terminal
+```
 laravel new laravel-mailable
 ```
 
@@ -43,7 +43,7 @@ MAIL_ENCRYPTION=null
 
 في هذا المثال، سنقوم بإنشاء `Mailable` نختار لها الإسم `UserSubscribed`، وذلك من خلال أوامر `php artisan` الخاصة بلارافيل.
 
-```terminal
+```
 php artisan make:mail UserSubscribed
 ```
 
@@ -142,7 +142,7 @@ Route::get('/', function () {
 
 لنقم الآن بتشغيل خادم PHP كما يلي:
 
-```terminal
+```
 php artisan serve
 ```
 
@@ -176,7 +176,7 @@ public function build()
 </div>
 ```
 
-من أين لنا بذلك الإسم **name\$** ؟
+من أين لنا بذلك الإسم `name$` ؟
 
 لحسن الحظ، Laravel يسمح لنا بفعل هذا بسهولة ومن دون أي إشكال :)
 
@@ -209,7 +209,7 @@ class UserSubscribed extends Mailable
 Mail::to('example@gmail.com')->send(new UserSubscribed("Aissa"));
 ```
 
-تلاحظون أننا مررنا الإسم Aissa بشكل حرفي، بينما في الحالة الحقيقية سنقوم بتمرير شيئا من هذا القبيل user()->name. ما يهمنا هنا هو إيصال الفكرة فقط :)
+تلاحظون أننا مررنا الإسم Aissa بشكل حرفي، بينما في الحالة الحقيقية سنقوم بتمرير شيئا من هذا القبيل `user()->name`. ما يهمنا هنا هو إيصال الفكرة فقط :)
 
 ![](../images/laravel-dynamic-data.png)
 
