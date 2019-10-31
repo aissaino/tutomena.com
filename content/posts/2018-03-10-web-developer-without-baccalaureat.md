@@ -1,7 +1,7 @@
 ---
 title: 'العمل كمطور ويب في المغرب بدون شهادة البكالوريا.. ممكن ؟'
 date: '2018-03-10'
-slug: 'web-development/web-developer-without-baccalaureat'
+slug: 'blog/web-developer-without-baccalaureat'
 template: 'post'
 categories:
   - برمجة
