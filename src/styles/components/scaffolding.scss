@@ -315,3 +315,13 @@ dd {
   padding: 2rem;
   border-radius: 10px;
 }
+
+.similar-articles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+  .box {
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.09);
+  }
+}

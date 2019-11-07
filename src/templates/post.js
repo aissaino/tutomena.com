@@ -11,6 +11,8 @@ import { formatDate, editOnGithub } from '../utils/global';
 import NewsletterForm from '../components/NewsletterForm';
 import { DiscussionEmbed } from 'disqus-react';
 
+import SimilarArticles from '../components/SimilarArticles';
+
 export default class PostTemplate extends Component {
   constructor(props) {
     super(props);
@@ -91,11 +93,22 @@ export default class PostTemplate extends Component {
             dangerouslySetInnerHTML={{ __html: postNode.html }}
           />
         </article>
+
+        <div className="container">
+          <h3>مواضيع ذات صلة:</h3>
+          <SimilarArticles
+            category={post.categories[0]}
+            tags={post.tags}
+            currentArticleSlug={post.id}
+          />
+        </div>
+
         <div className="container">
           <div className="comments">
             <DiscussionEmbed {...disqusConfig} />
           </div>
         </div>
+
         <div className="container">
           <NewsletterForm />
         </div>

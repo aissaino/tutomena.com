@@ -11,7 +11,7 @@ export default class SEO extends Component {
     let description;
     let image = '';
     let postURL;
-    console.log(postNode);
+
     if (postSEO) {
       const postMeta = postNode.frontmatter;
       title = postMeta.title;
