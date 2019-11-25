@@ -3,6 +3,11 @@ const kebabCase = require('lodash.kebabcase');
 const moment = require('moment');
 const siteConfig = require('./data/SiteConfig');
 const sharp = require('sharp');
+
+if (process.env.NODE_ENV === 'development') {
+  process.env.GATSBY_WEBPACK_PUBLICPATH = '/';
+}
+
 sharp.simd(false);
 sharp.cache(false);
 

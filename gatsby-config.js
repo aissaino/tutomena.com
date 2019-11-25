@@ -193,6 +193,14 @@ module.exports = {
         endpoint:
           'https://tutomena.us5.list-manage.com/subscribe/post?u=72334ecc8f3dbf8dcc09abcef&id=1413753173' // add your MC list endpoint here; see instructions below
       }
+    },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          `gatsby-remark-emoji` // <-- this line adds emoji
+        ]
+      }
     }
   ]
 };
