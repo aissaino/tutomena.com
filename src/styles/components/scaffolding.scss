@@ -208,6 +208,18 @@ a {
 
 .post {
   margin-bottom: 4rem;
+
+  h3 {
+    color: #444;
+  }
+
+  h4 {
+    color: #666;
+  }
+
+  strong {
+    color: #111;
+  }
 }
 
 .post,
@@ -230,6 +242,8 @@ a {
   img {
     max-width: 100%;
     height: auto;
+    display: block;
+    /* margin: 5rem auto; */
   }
 }
 
