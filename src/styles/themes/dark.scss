@@ -56,6 +56,9 @@ $dark-border: darken($background, 3%);
 
   .post,
   .page {
+    strong {
+      color: #f0f0f0;
+    }
     a:not(.button):not(.anchor):not(.gatsby-resp-image-link) {
       border-bottom: 2px solid transparent;
 
