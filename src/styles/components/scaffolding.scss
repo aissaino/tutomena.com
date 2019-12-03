@@ -171,6 +171,7 @@ ul {
       content: '\2022 ';
       position: absolute;
       right: 0;
+      top: 6px;
       color: lighten($font-color, 30%);
       font-size: 22px;
       line-height: 1.1;
@@ -184,12 +185,9 @@ ul {
   }
 }
 
-@include small-breakpoint {
-  ul {
-    li {
-      padding-right: 1.5rem;
-      margin-right: 1.5rem;
-    }
+ul {
+  li {
+    padding-right: 1.5rem;
   }
 }
 
@@ -338,4 +336,8 @@ dd {
     background: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.09);
   }
+}
+
+ol {
+  padding-right: 1.5rem;
 }
