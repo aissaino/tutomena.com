@@ -1,9 +1,9 @@
 {
-  "name": "taniarascia.com",
-  "description": "Personal website running on Gatsby, React, and Node.js.",
-  "version": "1.0.1",
-  "author": "Tania Rascia <tania@taniarascia.com>",
-  "repository": "git@github.com:taniarascia/taniarascia.com",
+  "name": "tutomena.com",
+  "description": "مدونة توتومينا، ملتقى المطورين العرب.",
+  "version": "1.0.0",
+  "author": "Aissa BOUGUERN <aissa.bouguern@gmail.com>",
+  "repository": "git@github.com:aissa-bouguern/tutomena.com",
   "dependencies": {
     "disqus-react": "^1.0.7",
     "eslint-utils": "^1.4.3",
