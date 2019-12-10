@@ -19,17 +19,18 @@ thumbnail: '../thumbnails/react.png'
 
 هذا النظام هو الذي أعطى السرعة الفائقة التي يعرف بها React.js، لأن التعامل مع كائنات الجافاسكربت أسرع من التعامل مع واجهات ال DOM APIs خاصة عندما تكون لدينا واجهة مستخدم معقدة وشجرة DOM فيها متشعبة ومتفرعة بشكل كبير.
 
-import React from "react";
-import ReactDOM from "react-dom";
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 const Hello = React.createClass({
-render() {
-return React.createElement('div', null, "hello world")
-}
+  render() {
+    return React.createElement('div', null, 'hello world');
+  }
 });
 
-ReactDOM.render(React.createElement(Hello),
-document.getElementById("app"));
+ReactDOM.render(React.createElement(Hello), document.getElementById('app'));
+```
 
 في المثال أعلاه، الدالة ReactDOM.render  تقوم بمقارنة ال Virtual DOM مع محتوى العنصر الذي عنده id يساوي app لمعرفة التغييرات التي يجب تنفيذها على DOM ثم بعد ذلك مباشرة يتم تحديث الأخير بإضافة النص hello world داخل العنصر app.
 
@@ -43,40 +44,37 @@ document.getElementById("app"));
 
 لنتعمق أكثر في الموضوع ولنأخذ مثالا آخر نستكشف من خلاله خاصيات جديدة في مكتبة **React.js **:
 
+```js
 const Hello = React.createClass({
-getInitialState() {
-return {
-hello: "world"
-};
-},
-handleInputChange(e) {
-this.setState({
-hello: e.target.value
-});
-},
-render() {
-return React.createElement(
-'div',
-null,
-React.createElement(
-'input',
-{
-value: this.state.hello,
-onChange: this.handleInputChange
-},
-null
-),
-React.createElement(
-'div',
-null,
-"hello " + this.state.hello
-)
-);
-}
+  getInitialState() {
+    return {
+      hello: 'world'
+    };
+  },
+  handleInputChange(e) {
+    this.setState({
+      hello: e.target.value
+    });
+  },
+  render() {
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'input',
+        {
+          value: this.state.hello,
+          onChange: this.handleInputChange
+        },
+        null
+      ),
+      React.createElement('div', null, 'hello ' + this.state.hello)
+    );
+  }
 });
 
-ReactDOM.render(React.createElement(Hello),
-document.getElementById("app"));
+ReactDOM.render(React.createElement(Hello), document.getElementById('app'));
+```
 
 أهم مصطلح على الإطلاق في فلسفة ReactJs والذي يتمحور عليه كل الحديث هو مفهوم **State** أو **الحالة**، كل مكون يتوفر على حالة وكلما وقع تغيير عليها يتم إعادة استدعاء الدالة **render** الخاصة بهذا المكون من أجل تحديثه على مستوى واجهة المستخدم.
 
@@ -99,40 +97,43 @@ document.getElementById("app"));
 
 لنقم بإعادة صياغة المثال السابق باستخدام JSX هذه المرة :
 
+```js
 const Hello = React.createClass({
-getInitialState() {
-return {
-hello: "world"
-};
-},
-handleInputChange(e) {
-this.setState({
-hello: e.target.value
+  getInitialState() {
+    return {
+      hello: "world"
+    };
+  },
+  handleInputChange(e) {
+    this.setState({
+      hello: e.target.value
+    });
+  },
+  render() {
+    return (
+    <div>
+      <input value={this.state.hello} onChange={this.handleInputChange} >
+      <div>hello {this.state.hello}</div>
+    </div>
+    );
+  }
 });
-},
-render() {
-return (
-<div>
-<input value={this.state.hello} onChange={this.handleInputChange} >
-<div>hello {this.state.hello}</div>
-</div>
-);
-}
-})
 
-ReactDOM.render(<Hello />,
-document.getElementById("app"));
+ReactDOM.render(<Hello />,document.getElementById("app"));
+```
 
 أرأيتم كيف أن تركيبة المكون الآن أصبحت واضحة وكأنها قالب HTML :) إلا أنها في النهاية مجرد **جافاسكريبت،** ولهذا ليس مسموحا على سبيل المثال استخدام السمة class داخل أكواد jsx لإضافة كلاس لعنصر ما، هذا لأن كلمة class محجوزة في لغة البرمجة جافاسكربت. عوضا عنها يتم استخدام className بهذه الطريقة :
 
+```js
 render() {
-return (
-<div className="user">
-<input value={this.state.hello} onChange={this.handleInputChange} />
-<div>hello {this.state.hello}</div>
-</div>
-);
+  return (
+  <div className="user">
+    <input value={this.state.hello} onChange={this.handleInputChange} />
+    <div>hello {this.state.hello}</div>
+  </div>
+  );
 }
+```
 
 يتم الإستعانة بالأداة **بابل** **Babel** لتحويل أكواد JSX لجافاسكربت اعتيادي.
 
@@ -144,32 +145,38 @@ return (
 
 تشبه ال props كثيرا السمات Attributes التي عهدناها في HTML، إلا أنها قابلة للتخصيص بشكل كامل ويمكن تسميتها كما نريد. لنأخذ هذا المثال حتى تتضح المسألة أكثر :
 
+```js
 Parent = React.createClass({
-getInitialState() {
-return {
-tacos: [ 'Guacamole', 'Beef', 'Bean' ]
-};
-},
-handleReverse() {
-this.setState( { tacos: this.state.tacos.reverse() } );
-},
-render() {
-return <div className="parent-component">
-<h3 onClick={ this.handleReverse }>List of tacos:</h3>
-<TacosList tacos={ this.state.tacos } />
-</div>;
-}
+  getInitialState() {
+    return {
+      tacos: ['Guacamole', 'Beef', 'Bean']
+    };
+  },
+  handleReverse() {
+    this.setState({ tacos: this.state.tacos.reverse() });
+  },
+  render() {
+    return (
+      <div className="parent-component">
+        <h3 onClick={this.handleReverse}>List of tacos:</h3>
+        <TacosList tacos={this.state.tacos} />
+      </div>
+    );
+  }
 });
 
 TacosList = React.createClass({
-render() {
-return <div className="tacos-list">
-{this.props.tacos.map( ( taco, index ) => {
-return <p key={ \`taco-${ index }\` }>{ taco }</p>;
-})}
-</div>;
-}
+  render() {
+    return (
+      <div className="tacos-list">
+        {this.props.tacos.map((taco, index) => {
+          return <p key={`taco-${index}`}>{taco}</p>;
+        })}
+      </div>
+    );
+  }
 });
+```
 
 المكون Parent يتوفر على خاصية داخل الحالة اسمها tacos وهي عبارة عن مصفوفة تضم أسماء مجموعة من أنواع التاكوس (نوع من الساندويتش :) ). نقوم بتمرير هذه المصفوفة لمكون ابن (TacosList) عبر prop اسمها tacos ويقوم بعرض عناصرها في واجهة المستخدم باستخدام الكائن **this.props**.
 
@@ -177,7 +184,7 @@ return <p key={ \`taco-${ index }\` }>{ taco }</p>;
 
 هذه صورة متحركة توضح هذا الكلام كله :
 
-[caption id="attachment_2447" align="aligncenter" width="463"][![استخدام Props و State في مكتبة React.js](../images/reversing-tacos-react-library.gif)](../images/reversing-tacos-react-library.gif) الصورة من موقع themeteorchef.com\
+![استخدام Props و State في مكتبة React.js](../images/reversing-tacos-react-library.gif) الصورة من موقع themeteorchef.com
 
 ## 3 طرق لإنشاء المكونات في React.js
 
@@ -189,46 +196,55 @@ return <p key={ \`taco-${ index }\` }>{ taco }</p>;
 
 يمكننا استخدام صيغة الإصدار الجديد من جافاسكربت والذي يمكن المطورين من استعمال الكلاسات وعديد الميزات الأخرى. المثال السابق يمكن إعادة كتابة على النحو التالي باستخدام طريقة ES6 :
 
+```js
 class Parent extends React.Component {
-constructor(props){
-super(props);
-this.state = {
-tacos: ['Guacamole', 'Beef', 'Bean']
-}
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      tacos: ['Guacamole', 'Beef', 'Bean']
+    };
+  }
 
-handleReverse = () => {
-this.setState({ tacos: this.state.tacos.reverse() });
-}
+  handleReverse = () => {
+    this.setState({ tacos: this.state.tacos.reverse() });
+  };
 
-render() {
-return <div className="parent-component">
-<h3 onClick={this.handleReverse}>List of tacos:</h3>
-<TacosList tacos={this.state.tacos} />
-</div>;
+  render() {
+    return (
+      <div className="parent-component">
+        <h3 onClick={this.handleReverse}>List of tacos:</h3>
+        <TacosList tacos={this.state.tacos} />
+      </div>
+    );
+  }
 }
-};
 
 class TacosList extends React.Component {
-render() {
-return <div className="tacos-list">
-{this.props.tacos.map((taco, index) => {
-return <p key={\`taco-${index}\`}>{taco}</p>;
-})}
-</div>;
+  render() {
+    return (
+      <div className="tacos-list">
+        {this.props.tacos.map((taco, index) => {
+          return <p key={`taco-${index}`}>{taco}</p>;
+        })}
+      </div>
+    );
+  }
 }
-};
+```
 
 ### الطريقة الوظيفية أو Stateless Component
 
 الطريقة الثالثة والأخيرة يمكن من خلال لها إنشاء مكون في React.js باستخدام دالة اعتيادية :
 
+```js
 function MyComponent(props) {
-return <div>
-<h1>Hello {props.name}</h1>
-</div>
+  return (
+    <div>
+      <h1>Hello {props.name}</h1>
+    </div>
+  );
 }
-}
+```
 
 نرى بأنه لا وجود للدالة render في هذا المكون، كما أنه لا يملك أي **حالة State** ولهذا يسمى هذا النوع من المكونات ب Stateless.
 
