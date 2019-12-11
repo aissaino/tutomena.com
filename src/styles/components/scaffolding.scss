@@ -301,6 +301,7 @@ dd {
   padding: 2rem;
   width: 100%;
   border: 1px solid #e1e7f4;
+  background-color: #f7f7f7;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -310,7 +311,10 @@ dd {
   text-align: center;
 
   form {
-    width: 65%;
+    width: 100%;
+    @include small-breakpoint {
+      width: 70%;
+    }
     margin-bottom: 0;
     .button {
       margin-bottom: 0;
