@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
+
+import { DiscussionEmbed } from 'disqus-react';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
+
 import Layout from '../layout';
 import UserInfo from '../components/UserInfo';
 import PostTags from '../components/PostTags';
@@ -9,7 +13,6 @@ import SEO from '../components/SEO';
 import config from '../../data/SiteConfig';
 import { formatDate, editOnGithub } from '../utils/global';
 import NewsletterForm from '../components/NewsletterForm';
-import { DiscussionEmbed } from 'disqus-react';
 
 import SimilarArticles from '../components/SimilarArticles';
 
@@ -25,7 +28,7 @@ export default class PostTemplate extends Component {
   render() {
     const { comments, error } = this.state;
     const { slug } = this.props.pageContext;
-    const postNode = this.props.data.markdownRemark;
+    const postNode = this.props.data.mdx;
     const post = postNode.frontmatter;
     const popular = postNode.frontmatter.categories.find(
       category => category === 'Popular'
@@ -88,10 +91,11 @@ export default class PostTemplate extends Component {
             </div>
           </header>
 
-          <div
+          {/* <div
             className="post"
             dangerouslySetInnerHTML={{ __html: postNode.html }}
-          />
+          /> */}
+          <MDXRenderer>{postNode.body}</MDXRenderer>
         </article>
 
         <div className="container">
@@ -121,8 +125,8 @@ export default class PostTemplate extends Component {
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+    mdx(fields: { slug: { eq: $slug } }) {
+      body
       timeToRead
       excerpt
       frontmatter {

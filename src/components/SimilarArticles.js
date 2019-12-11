@@ -26,7 +26,7 @@ function getPostsFromQuery(posts) {
 
 const query = graphql`
   query SimilarArticles {
-    latest: allMarkdownRemark(
+    latest: allMdx(
       limit: 500
       sort: { fields: [fields___date], order: DESC }
       filter: { frontmatter: { template: { eq: "post" } } }

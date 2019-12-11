@@ -109,7 +109,7 @@ export default class BlogPage extends Component {
 
 export const pageQuery = graphql`
   query BlogQuery {
-    posts: allMarkdownRemark(
+    posts: allMdx(
       limit: 2000
       sort: { fields: [fields___date], order: DESC }
       filter: { frontmatter: { template: { eq: "post" } } }
@@ -139,7 +139,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    categories: allMarkdownRemark(limit: 2000) {
+    categories: allMdx(limit: 2000) {
       group(field: frontmatter___categories) {
         fieldValue
         totalCount
