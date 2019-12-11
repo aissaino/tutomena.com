@@ -8,7 +8,7 @@ import config from '../../data/SiteConfig';
 export default class CategoryTemplate extends Component {
   render() {
     const { category } = this.props.pageContext;
-    const postEdges = this.props.data.allMarkdownRemark.edges;
+    const postEdges = this.props.data.allMdx.edges;
 
     return (
       <Layout>
@@ -16,7 +16,9 @@ export default class CategoryTemplate extends Component {
           title={`منشورات في التصنيف "${category}" – ${config.siteTitle}`}
         />
         <div className="container">
-          <h1>التصنيف: {category}</h1>
+          <h1>
+            منشورات في التصنيف <u>{category}</u>
+          </h1>
           <PostListing postEdges={postEdges} />
         </div>
       </Layout>
@@ -26,7 +28,7 @@ export default class CategoryTemplate extends Component {
 
 export const pageQuery = graphql`
   query CategoryPage($category: String) {
-    allMarkdownRemark(
+    allMdx(
       limit: 1000
       sort: { fields: [fields___date], order: DESC }
       filter: { frontmatter: { categories: { in: [$category] } } }
