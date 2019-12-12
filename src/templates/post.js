@@ -12,7 +12,7 @@ import PostTags from '../components/PostTags';
 import SEO from '../components/SEO';
 import config from '../../data/SiteConfig';
 import { formatDate, editOnGithub } from '../utils/global';
-import NewsletterForm from '../components/NewsletterForm';
+import { NewsletterForm } from '../shortcodes';
 
 import SimilarArticles from '../components/SimilarArticles';
 

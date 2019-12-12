@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import Layout from '../layout';
 import SEO from '../components/SEO';
 import config from '../../data/SiteConfig';
-import NewsletterForm from '../components/NewsletterForm';
+import { NewsletterForm } from '../shortcodes';
 
 export default function NewsletterPage() {
   return (
