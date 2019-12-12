@@ -12,10 +12,11 @@
 - DOS mode (404)
 - Code theme (starring [New Moon](https://taniarascia.github.io/new-moon))
 - Sass (starring [Primitive](https://taniarascia.github.io/primitive))
+- Related Posts (Thank you [Khalil Stemmler](https://khalilstemmler.com/articles/gatsby-related-posts-component/))
 
 ## Contributing
 
-If you see any typos or formatting errors in a post, or any other issue that needs to be addressed, please do not hesitate to open a pull request and fix it!
+Please, feel free to contribute by sending a Pull Request to solve any issue you find in this repo.
 
 ## Acknowledgements
 
