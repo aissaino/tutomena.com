@@ -1,0 +1,32 @@
+.author-widget {
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  margin: 5rem 0;
+  background-color: #f7f7f7;
+  border-top: 2px solid #e1e7f4;
+  border-bottom: 2px solid #e1e7f4;
+  .photo {
+    width: 128px;
+    height: 128px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  .about {
+    width: calc(100% - 128px);
+    padding-right: 2rem;
+    h5 {
+      margin-bottom: 1rem;
+    }
+    .links {
+      margin-top: 1rem;
+      a {
+        margin-left: 1rem;
+
+        img {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
