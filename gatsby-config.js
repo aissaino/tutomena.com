@@ -51,6 +51,13 @@ module.exports = {
       }
     },
     {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [`gatsby-remark-images`]
+        // I use this twice because it seems like it does'nt work well with gatsby-plugin-mdx.
+      }
+    },
+    {
       resolve: 'gatsby-plugin-mdx',
       options: {
         extensions: [`.mdx`, `.md`],
