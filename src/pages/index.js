@@ -8,10 +8,6 @@ import PostListing from '../components/PostListing';
 /* import SimpleListing from '../components/SimpleListing'; */
 import SEO from '../components/SEO';
 import config from '../../data/SiteConfig';
-/* import projects from '../../data/projects'; */
-/* import speaking from '../../data/speaking';
-import podcasts from '../../data/podcasts'; */
-/* import quotes from '../../data/quotes'; */
 import tutomena from '../../content/thumbnails/tutomena.png';
 import twitterIcon from '../../content/thumbnails/twitter-32.png';
 import facebookIcon from '../../content/thumbnails/facebook-32.png';
@@ -109,33 +105,6 @@ export default class Index extends Component {
             </h2>
             <PostListing simple postEdges={popularPostEdges} />
           </section>
-
-          {/* <section className="section">
-            <h2>Open Source Projects</h2>
-            <ProjectListing projects={projects} />
-          </section> */}
-
-          {/* <section className="section">
-            <h2>Podcasts</h2>
-            <SimpleListing simple data={podcasts} />
-          </section> */}
-
-          {/* <section className="section">
-            <h2>Speaking</h2>
-            <SimpleListing simple data={speaking} />
-          </section> */}
-
-          {/* <section className="section">
-            <h2>{`Other People's Opinions`}</h2>
-            <div className="quotations">
-              {quotes.map(quote => (
-                <blockquote className="quotation" key={quote.name}>
-                  <p>{quote.quote}</p>
-                  <cite>— {quote.name}</cite>
-                </blockquote>
-              ))}
-            </div>
-          </section> */}
         </div>
       </Layout>
     );
