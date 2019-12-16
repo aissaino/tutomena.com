@@ -30,6 +30,7 @@ thumbnail: '../thumbnails/android.png'
 
 لنفترض أنه لدينا _كلاس جافا_، مثلا _كلاس_ خاص بالزبناء :
 
+```java
 public class Customer {
 
     private String name;
@@ -47,12 +48,14 @@ public class Customer {
     }
 
 }
+```
 
 يمكننا استخدام هذا الكلاس في ملف _Kotlin_ بدون تعقيدات :
 
+```java
 val customer = Customer("John")
-
-        println(customer.getName())
+println(customer.getName())
+```
 
 هذا رائع أليس كذلك ؟ :) بهذه الطريقة استطاع مطورو _Jetbrains_ استكمال أعمالهم في مشاريع الشركة بواسطة لغتهم الجديدة دون الحاجة لبدء عملية التكويد من الصفر.
 
@@ -68,49 +71,53 @@ val customer = Customer("John")
 
 الخاصية _loyal_ سنعتبرها اختيارية (Optional) ونعطيها _false_ كقيمة افتراضية.
 
+```java
 public class Customer {
-private String name;
-private String email;
-private boolean loyal;
+  private String name;
+  private String email;
+  private boolean loyal;
 
-public Customer(String name, String email) {
-this.name = name;
-this.email = email;
-this.loyal = false;
-}
+  public Customer(String name, String email) {
+    this.name = name;
+    this.email = email;
+    this.loyal = false;
+  }
 
-public Customer(String name, String email, boolean loyal) {
-this.name = name;
-this.email = email;
-this.loyal = loyal;
-}
+  public Customer(String name, String email, boolean loyal) {
+    this.name = name;
+    this.email = email;
+    this.loyal = loyal;
+  }
 
-public String getName() {
-return name;
-}
-public void setName(String name) {
-this.name = name;
-}
+  public String getName() {
+    return name;
+  }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-public String getEmail() {
-return email;
-}
-public void setEmail(String email) {
-this.email = email;
-}
+  public String getEmail() {
+    return email;
+  }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-public boolean isLoyal() {
-return loyal;
-}
+  public boolean isLoyal() {
+    return loyal;
+  }
 
-public void setLoyal(boolean loyal) {
-this.loyal = loyal;
+  public void setLoyal(boolean loyal) {
+    this.loyal = loyal;
+  }
 }
-}
+```
 
-وهذا هو شكل نفس الكلاس في _Kotlin_ :
+وهذا هو شكل نفس الكلاس في Kotlin :
 
-class Customer(val name: Strong, val email: String, var loyal: Boolean = false)
+```kotlin
+class Customer(val name: String, val email: String, var loyal: Boolean = false)
+```
 
 40 سطرا في جافا مقابل سطر واحد في كوتلن! نعم لن تجد أبسط من ذلك.
 
@@ -118,47 +125,59 @@ class Customer(val name: Strong, val email: String, var loyal: Boolean = false)
 
 في جافا (وكذلك في كوتلن) عندما نحاول طباعة كائن Object فإننا عوض رؤية خصائصه نرى مرجعه أو ما يعرف ب _Object reference_.
 
+```java
 Customer customer1 = new Card("Ahmed", "ahmed@example.com");
 Customer customer2 = new Card("Ahmed", "ahmed@example.com");
 println(customer1); // com.tutomena.JavaKotlin.Customer@98ac8e5
 println(customer2); // com.tutomena.JavaKotlin.Customer@320cb1a
+```
 
 وإذا حاولت مقارنة هذين الزبونين فإنك تقارن مرجعيهما في الذاكرة _Object Reference_ وبطبيعة الحال القيمة هنا ستكون false
 
+```java
 println(customer1 == customer2); // false
 println(customer1.equals(customer2)); // false
+```
 
 لتعديل هذا السلوك فإننا نقوم عادة بعمل **Override** على الوظيفة _equals_ في جافا، بهذه الطريقة :
 
+```java
 @Override
 public boolean equals(Object object) {
-if (object instanceof Customer) {
-Customer customer = (Customer) object;
-return this.name.equals(customer.name)
-&& this.email.equals(card.email)
-&& this.loyal == customer.loyal;
-} else {
-return false;
+  if (object instanceof Customer) {
+    Customer customer = (Customer) object;
+    return this.name.equals(customer.name)
+    && this.email.equals(card.email)
+    && this.loyal == customer.loyal;
+  } else {
+    return false;
+  }
 }
-}
+```
 
 ولطباعة شيء أكثر أهمية من مراجع الكائنات فإننا نقوم بنفس العملية على الوظيفة _toString_ كالتالي :
 
+```java
 @Override
 public String toString() {
-return "Customer(name="+name+", email="+email+", loyal="+loyal+")";
+  return "Customer(name="+name+", email="+email+", loyal="+loyal+")";
 }
+```
 
 ولكن هنا من جديد، تبدو _Kotlin_ أكثر ذكاءً ومرونة من _Java_، كل ما علينا فعله للحصول على نفس النتيجة هو إضافة الكلمة **data** قبل **class** على هذا النحو :
 
+```kotlin
 data class Customer(val name: Strong, val email: String, var loyal: Boolean = false)
+```
 
 وهذه هي النتيجة :
 
+```java
 Customer customer1 = new Customer("Ahmed", "ahmed@example.com")
 Customer customer2 = new Customer("Ahmed", "ahmed@example.com")
 println(customer1) // Customer(name="Ahmed", email="ahmed@example.com", loyal=false)
 println(customer1 == customer2) // true
+```
 
 وصلنا لهذه النتيجة باستخدام قرابة **60 سطرا** من أكواد _جافا_، بينما بقينا في _كوتلن_ مع **سطر واحد** فقط. هذا ما قصده العاملون في **Jetbrains** بقولهم أن المسألة برمتها تتعلق بزيادة وتحسين إنتاجية المطورين.
 
@@ -174,8 +193,10 @@ println(customer1 == customer2) // true
 
 ---
 
-**المراجع :**
+#### المراجع
 
 - [http://blog.teamtreehouse.com/learn-kotlin-java](http://blog.teamtreehouse.com/learn-kotlin-java)
 - [https://kotlinlang.org/docs/tutorials/mixing-java-kotlin-intellij.html](https://kotlinlang.org/docs/tutorials/mixing-java-kotlin-intellij.html)
 - [https://medium.com/@magnus.chatt/why-you-should-totally-switch-to-kotlin-c7bbde9e10d5](https://medium.com/@magnus.chatt/why-you-should-totally-switch-to-kotlin-c7bbde9e10d5)
+
+<Author slug="aissa" />
