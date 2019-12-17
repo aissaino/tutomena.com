@@ -11,13 +11,13 @@ tags:
 thumbnail: '../thumbnails/js.png'
 ---
 
-socket.io هي من أكثر المكتبات شعبية في بيئة Node.js، نظرا لكونها سهلت كثيرا على مطوري الويب بناء تطبيقات تزامنية بين الخادم والعميل بالإعتماد بشكل خاص على بروتوكول Websocket. وعندما نقول تطبيقات تزامنية أو آنية (_Real Time_) فإننا نقصد بها كل تطبيق يحتاج فيه العملاء (Clients) للحصول على أحدث البيانات من الخادم (Server) من دون إعادة تحميل الصفحة أو الضغط على أي زر في التطبيق.
+socket.io هي من أكثر المكتبات شعبية في بيئة Node.js، نظرا لكونها سهلت كثيرا على مطوري الويب بناء تطبيقات تزامنية بين الخادم والعميل بالإعتماد بشكل خاص على بروتوكول Websocket. وعندما نقول تطبيقات تزامنية أو آنية (Real Time) فإننا نقصد بها كل تطبيق يحتاج فيه العملاء (Clients) للحصول على أحدث البيانات من الخادم (Server) من دون إعادة تحميل الصفحة أو الضغط على أي زر في التطبيق.
 
 ## ما هي آلية عمل WebSockets ؟
 
 في فيسبوك، على سبيل المثال، يتلقى المستخدم إشعارات بالتعليقات الجديدة على منشوراته ويشاهدها في الوقت الحي على شاشته من دون تدخل منه. الذي يحدث أنه بمجرد دخولنا إلى موقع فيسبوك يقوم الأخير بفتح قناة لا تغلق إلا بعد الخروج منه، ومن خلالها يستطيع الخادم إرسال بيانات معينة إلى العميل الذي يقوم بالتنصت على الخادم وانتظار أي خبر جديد منه ليقوم بعرض ما يتلقاه من بيانات على واجهة المستخدم.
 
-هذه العملية ثنائية الإتجاه (_Bi-directional_)، أي أن الخادم كذلك قادر على التنصت على العميل وانتظار معلومات جديدة منه ليقوم بإرسالها للعملاء الآخرين. هذا يحدث على سبيل المثال في تطبيقات الدردشة أو الشات، حيث تقوم بكتابة رسالتك ومباشرة عند الضغط على زر الإرسال تظهر في الطرف الآخر عند صديقك.
+هذه العملية ثنائية الإتجاه (Bi-directional)، أي أن الخادم كذلك قادر على التنصت على العميل وانتظار معلومات جديدة منه ليقوم بإرسالها للعملاء الآخرين. هذا يحدث على سبيل المثال في تطبيقات الدردشة أو الشات، حيث تقوم بكتابة رسالتك ومباشرة عند الضغط على زر الإرسال تظهر في الطرف الآخر عند صديقك.
 
 يمكنك تشبيه هذا الفيلم بالجندي الذي يحمل جهازه اللاسلكي، ويستخدمه للإتصال بقائده وإخباره بآخر المستجدات الميدانية، فيقوم القائد بدوره بتحويل تلك المعلومات الواردة في الإتصال عن طريق جهازه إلى مجموعة من الجنود الآخرين الذي يحملون أجهزتهم كذلك ويتنصتون عليها :)
 
@@ -55,21 +55,29 @@ socket.io هي من أكثر المكتبات شعبية في بيئة Node.js،
 
 إليكم الطريقة المعتادة لفعل ذلك:
 
+```bash
 mkdir socketio-example && cd socketio-example
+```
 
 بعد ذلك نقوم بتهيئة مشروع Node.js جديد داخل المجلد عن طريق الأمر التالي:
 
+```bash
 npm install -y
+```
 
-هذا سيؤدي لإنشاء ملف package.json الإعتيادي. سنستخدم هذا الملف لاحقا لإضافة أوامر تمكننا من تشغيل خادم Node.js.
+هذا سيؤدي لإنشاء ملف `package.json` الإعتيادي. سنستخدم هذا الملف لاحقا لإضافة أوامر تمكننا من تشغيل خادم Node.js.
 
 الخطوة التالية هي خطوة اختيارية ولكنها محبدة، وهي تحميل الأداة [nodemon](https://nodemon.io/) التي تمكننا من تشغيل خادم Node.js وإعادة تشغيله (_Restart_) بعد كل تغيير على مستوى ملفات المشروع (_Watching changes_)، لكي لا نظطر لفعل ذلك يدويا.
 
+```bash
 npm install nodemon --save-dev
+```
 
 الآن حان الوقت لتحميل مكتبة socket.io، ودائما عن طريق مدير الحزم npm :)
 
+```bash
 npm install socket.io
+```
 
 بعد تحميل المكتبة، سننشئ ملفين اثنين :
 
@@ -78,25 +86,27 @@ npm install socket.io
 
 ### ملف الخادم (_index.js_)
 
-محتوى الملف index.js سيكون بسيطا، لاحظوا :
+محتوى الملف `index.js` سيكون بسيطا، لاحظوا :
 
+```js
 var http = require('http');
 var fs = require('fs');
 
 var server = http.createServer(function(req, res) {
-fs.readFile('./index.html', 'utf-8', function(error, content) {
-res.writeHead(200, {"Content-Type": "text/html"});
-res.end(content);
-});
+  fs.readFile('./index.html', 'utf-8', function(error, content) {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(content);
+  });
 });
 
 var io = require('socket.io').listen(server);
 
-io.sockets.on('connection', function (socket) {
-console.log('A client is connected');
+io.sockets.on('connection', function(socket) {
+  console.log('A client is connected');
 });
 
 server.listen(8080);
+```
 
 هنا قمنا بشيئين :
 
@@ -105,28 +115,29 @@ server.listen(8080);
 
 إذن في الأخير سيكون هناك اتصالين اثنين :
 
-- اتصال http يفتح لنا صفحة index.html على المتصفح.
-- من داخل صفحة index.html سنقوم بإنشاء قناة اتصال متزامن نحو الخادم عن طريق مكتبة socket.io جهة العميل، فكما قلت في السابق هذه المكتبة تعمل في كلتا الناحيتين (Server و Client).
+- اتصال http يفتح لنا صفحة `index.html`على المتصفح.
+- من داخل صفحة `index.html` سنقوم بإنشاء قناة اتصال متزامن نحو الخادم عن طريق مكتبة socket.io جهة العميل، فكما قلت في السابق هذه المكتبة تعمل في كلتا الناحيتين (Server و Client).
 
-### ملف العميل (_index.html_)
+### ملف العميل (index.html)
 
+```html
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Socket.io</title>
-    </head>
- 
-    <body>
-        <h1>Socket.io client</h1>
+  <head>
+    <meta charset="utf-8" />
+    <title>Socket.io</title>
+  </head>
 
-        <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            var socket = io.connect('http://localhost:8080');
-        </script>
-    </body>
+  <body>
+    <h1>Socket.io client</h1>
 
+    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var socket = io.connect('http://localhost:8080');
+    </script>
+  </body>
 </html>
+```
 
 تلاحظون أن هذا الملف غاية في البساطة كذلك، فقط قمنا باستدعاء مكتبة العميل الخاصة ب Socket.io من خلال المسار socket.io/socket.io.js/ الذي توفره لنا الوحدة _socket.io_ التي استخدمناها في ملف الخادم.
 
@@ -136,15 +147,19 @@ server.listen(8080);
 
 يمكننا إضافة هذه الأوامر كما رأينا في دروس سابقة في ملف package.json بهذه الطريقة :
 
+```json
 ...
 "scripts": {
-"dev": "nodemon index.js"
+    "dev": "nodemon index.js"
 }
 ...
+```
 
 نستطيع الآن تشغيل الخادم عن طريق تنفيذ الأمر **npm run dev** (بحيث dev هو اسم الأمر الذي اخترناه أعلاه في ملف package.json).
 
+```bash
 npm run dev
+```
 
 بعد تشغيل الخادم، ومع دخولنا للرابط http://localhost:8080 على المتصفح سنرى بأن الرسالة "A client is connected" قد طبعت في نافذة الأوامر السطرية.
 
@@ -156,15 +171,17 @@ npm run dev
 
 ## إرسال واستقبال الرسائل بين الخادم والعميل
 
-### 1\. الخادم يرسل رسالة للعميل
+### 1. الخادم يرسل رسالة للعميل
 
 في المثال السابق، كنا طلبنا من الخادم أن يقوم بطباعة رسالة "A client is connected" عن طريق console.log، وهذا فقط للتحقق من أن الإتصال تم بنجاح، إذ أن المستخدم لا يرى تلك الرسالة على المتصفح. لهذا، سنقوم الآن بإرسال رسالة لهذا المستخدم لنخبره بأنه متصل، وسيتمكن العميل (المتصفح) من التقاط تلك الرسالة وعرضها على شكل alert.
 
 الطريقة هي كالتالي :
 
-io.sockets.on('connection', function (socket) {
-socket.emit('connected', 'You are connected :)');
+```js
+io.sockets.on('connection', function(socket) {
+  socket.emit('connected', 'You are connected :)');
 });
+```
 
 هنا قمنا بإرسال رسالة للعميل عن طريق الوظيفة ()socket.emit التي تقبل معاملين اثنين:
 
@@ -173,12 +190,14 @@ socket.emit('connected', 'You are connected :)');
 
 في ناحية العميل (Client) سنتنصت على قدوم الرسالة عن طريق الوظيفة ()socket.on :
 
+```html
 <script type="text/javascript">
-            var socket = io.connect('http://localhost:8080');
-            socket.on('connected', function(message) {
-                alert('Message from server: ' + message);
-            });
-        </script>
+  var socket = io.connect('http://localhost:8080');
+  socket.on('connected', function(message) {
+    alert('Message from server: ' + message);
+  });
+</script>
+```
 
 تلاحظون أن الوظيفة ()on تقبل بارامترين: الأول هو نوع الرسالة (connected) والثاني هو دالة Callback تقبل بدورها بارامترا واحدا هو محتوى الرسالة القادمة من الخادم.
 
@@ -186,37 +205,37 @@ socket.emit('connected', 'You are connected :)');
 
 [![](../images/socketio-client.png)](../images/socketio-client.png)
 
-### 2\. العميل يرسل رسالة للخادم
+### 2. العميل يرسل رسالة للخادم
 
 لكي نقوم بإرسال رسالة من العميل نحو الخادم، سنقوم بإضافة زر لصفحة index.html وعند النقر عليه سنقوم بإرسال رسالة للخادم. الطريقة هي نفسها تقريبا.
 
+```html
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Socket.io</title>
-    </head>
- 
-    <body>
-        <h1>Socket.io client</h1>
+  <head>
+    <meta charset="utf-8" />
+    <title>Socket.io</title>
+  </head>
 
-        <button id="button">Send to server</button>
+  <body>
+    <h1>Socket.io client</h1>
 
-        <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            var socket = io.connect('http://localhost:8080');
-            socket.on('connected', function(message) {
-                alert('Message from server: ' + message);
-            });
+    <button id="button">Send to server</button>
 
-            document.getElementById("button").addEventListener("click", function () {
-                socket.emit('message', 'Message from client to server');
-            });
+    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var socket = io.connect('http://localhost:8080');
+      socket.on('connected', function(message) {
+        alert('Message from server: ' + message);
+      });
 
-        </script>
-    </body>
-
+      document.getElementById('button').addEventListener('click', function() {
+        socket.emit('message', 'Message from client to server');
+      });
+    </script>
+  </body>
 </html>
+```
 
 العميل يقوم بإرسال المعلومات للخادم بدالة ()emit تحمل كما تلاحظون نفس اسم الدالة أو الوظيفة التي يستخدمها الخادم لنفس الغرض، لهذا قلت سابقا بأن الواجهة البرمجية التي توفرها Socket.io بسيطة وبديهية :)
 
@@ -224,15 +243,15 @@ socket.emit('connected', 'You are connected :)');
 
 الآن يجب علينا أن نطلب من الخادم أن يتنصت على الرسائل من هذا النوع، وذلك عن طريق الدالة ()socket.on:
 
-io.sockets.on('connection', function (socket) {
+```js
+io.sockets.on('connection', function(socket) {
+  socket.emit('connected', 'You are connected :)');
 
-    socket.emit('connected', 'You are connected :)');
-
-    socket.on('message', function (message) {
-        console.log('A message coming from client: ' + message);
-    });
-
+  socket.on('message', function(message) {
+    console.log('A message coming from client: ' + message);
+  });
 });
+```
 
 بعد القيام بكل هذه الخطوات بشكل صحيح، وبعد أن ننقر على الزر الجديد في صفحتنا سنرى بأن الرسالة قد تمت طباعتها في نافذة الأوامر السطرية (Terminal) الخاصة بالخادم، ما يعني أن الأخير قد استقبل بشكل جيد رسالة ال Client.
 
@@ -248,21 +267,21 @@ io.sockets.on('connection', function (socket) {
 
 يجب علينا أن نطلب من الخادم أن يقوم بإرسال تلك الرسالة لكل العملاء والمستخدمين الذين تربطهم في الوقت الحالي قناة socket.io مفتوحة مع الخادم.
 
-الطريقة هي ()io.emit
+الطريقة هي `io.emit()`
 
-io.sockets.on('connection', function (socket) {
+```js
+io.sockets.on('connection', function(socket) {
+  socket.emit('connected', 'You are connected :)');
 
-    socket.emit('connected', 'You are connected :)');
+  io.emit('connected', 'Another client is connected to chat room :)');
 
-    io.emit('connected', 'Another client is connected to chat room :)');
-
-    socket.on('message', function (message) {
-        console.log('A message coming from client: ' + message);
-    });
-
+  socket.on('message', function(message) {
+    console.log('A message coming from client: ' + message);
+  });
 });
+```
 
-الآن كلما فتحنا نافذة جديدة في المتصفح (http://localhost:8080) ستقوم الصفحات في النوافذ الأخرى بعرض الرسالة "_Another client is connected to chat room_" في نافذة **alert** (لأنه سبق أن طلبنا من العميل أن يتنصت على الرسائل من نوع connected)، وهذا بالضبط ما نريده.
+الآن كلما فتحنا نافذة جديدة في المتصفح `http://localhost:8080` ستقوم الصفحات في النوافذ الأخرى بعرض الرسالة "_Another client is connected to chat room_" في نافذة **alert** (لأنه سبق أن طلبنا من العميل أن يتنصت على الرسائل من نوع connected)، وهذا بالضبط ما نريده.
 
 [alert type="info" icon-size="normal"]في حالات أخرى، نكون في حاجة لإرسال البيانات من الخادم إلى جميع العملاء باستثناء العميل المرسِل، في تلك الحالة نقوم باستخدام ()socket.broadcast.emit عوضا عن ()io.emit.[/alert]
 
@@ -276,4 +295,4 @@ io.sockets.on('connection', function (socket) {
 
 في أحد الدروس القادمة إن شاء الله، سأقوم بإنجاز مثال عملي أكثر تقدما، عبارة عن [تطبيق للدردشة نقوم ببنائه بواسطة Socket.io وأحد أطر عمل جافاسكريبت](https://www.tutomena.com/web-development/javascript/socketio-chat-tutorial/) (غالبا سيكون React.js).
 
-_إلى ذلك الحين لا تبخلوا علينا بتعليقاتكم الجميلة، وملاحظاتهم وكذا اقتراحاتكم للدروس المقبلة._
+> إلى ذلك الحين لا تبخلوا علينا بتعليقاتكم الجميلة، وملاحظاتهم وكذا اقتراحاتكم للدروس المقبلة.

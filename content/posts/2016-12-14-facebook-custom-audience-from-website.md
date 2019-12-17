@@ -29,7 +29,7 @@ thumbnail: '../thumbnails/facebook.png'
 
 يستحسن إختيار اسم واضح ذات دلالة وله علاقة بنشاط موقعك، مع العلم أنه يمكنك تغييره  لاحقا متى أردت ذلك.
 
-بعد توليد الشيفرة، قم بنسخها ولصقها داخل الوسم <head> الخاص بصفحات موقعك. وإذا كنت لا تجيد فعل ذلك فيمكنك إرسال الشيفرة عن طريق الإيميل لأحد أصدقائك أو زملائك ممن يمتلكون المهارات اللازمة لذلك عن طريق الضغط على الزر _Email Pixel Code._
+بعد توليد الشيفرة، قم بنسخها ولصقها داخل الوسم `<head>` الخاص بصفحات موقعك. وإذا كنت لا تجيد فعل ذلك فيمكنك إرسال الشيفرة عن طريق الإيميل لأحد أصدقائك أو زملائك ممن يمتلكون المهارات اللازمة لذلك عن طريق الضغط على الزر _Email Pixel Code._
 
 جذير بالعلم أنه **لا يمكنك** توليد أكثر من شيفرة فيسبوك بكسيل واحدة لكل حساب Facebook Ads.
 
@@ -38,8 +38,8 @@ thumbnail: '../thumbnails/facebook.png'
 الخطوة التالية بعد إضافة **كود فيسبوك بيكسيل** لموقعك هي إنشاء **الجمهور المستهدف** عن طريق مدير إعلانات فيسبوك. لفعل ذلك قم باتباع المراحل التالية :
 
 1. توجه ل **All Tools** ثم بعد ذلك قم بالضغط على الرابط **Audiences**.[![جمهور مستهدف على فيسبوك](../images/facebook-audiences-1-1024x364.jpg)](../images/facebook-audiences-1.jpg)
-2. بعدها قم بالضغط على **Create Audience** ثم على ****Custom Audience.**** [![Facebook Custom Audience](../images/facebook-custom-audience-1024x338.jpg)](../images/facebook-custom-audience.jpg)
-3. قم باختيار ********Website traffic.********[![Facebook Website Traffic](../images/facebook-website-traffic.jpg)](../images/facebook-website-traffic.jpg)
+2. بعدها قم بالضغط على **Create Audience** ثم على \***\*Custom Audience.\*\*** [![Facebook Custom Audience](../images/facebook-custom-audience-1024x338.jpg)](../images/facebook-custom-audience.jpg)
+3. قم باختيار **\*\*\*\***Website traffic.**\*\*\*\***[![Facebook Website Traffic](../images/facebook-website-traffic.jpg)](../images/facebook-website-traffic.jpg)
 4. رابعا، اختر نوع الترافيك الذي تود استهدافه، هل ستستهدف **كل الزوار** أم فقط زوار **صفحات معينة** من موقعك أم أنك ستستهدف جميع زوار موقعك **باستثناء** زوار صفحات معينة، كل ذلك عن طريق القائمة المنسدلة **Website traffic.** بعد ذلك ضع اسما واضحا ودلاليا لجمهورك المستهدف حتى تتعرف عليه بسهولة إذا ما أردت إعادة استخدامه لاحقا.![Facebook create audience](../images/facebook-create-audience.jpg) باقي الإعدادات يمكنك تركها على حالتها الإفتراضية. وعند الإنتهاء قم بالضغط على الزر Create Audience وسيصبح زوار موقعك عبارة عن ترافيك جاهز للإستهداف متى أردت ذلك.
 5. بعد هذا، أنت الآن تستطيع استخدام هذا الجمهور للإستهداف في إعلاناتك على فيسبوك، فقط عند البدء في إنشاء إعلان جديد قم باختيار الجمهور الذي أنشأناه (_جمهور توتومينا_) كترافيك مستهدف للإعلان وبعدها فيسبوك سيتولى باقي المهمة.[![Facebook saved audience](../images/facebook-saved-audience.jpg)](../images/facebook-saved-audience.jpg)
 

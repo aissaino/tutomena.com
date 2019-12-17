@@ -67,7 +67,7 @@
     "write-good": "^1.0.2"
   },
   "keywords": [
-    "tania rascia",
+    "tutomena",
     "development",
     "dev",
     "tutorials",
@@ -82,6 +82,7 @@
     "dev": "yarn run develop",
     "serve": "gatsby serve",
     "build": "gatsby build",
+    "gatsby-clean": "gatsby clean",
     "build:pp": "gatsby build --prefix-paths",
     "build:gh": "yarn run clean && yarn run build:pp && gh-pages -d public",
     "clean": "rm -rf public && rm -rf .cache",

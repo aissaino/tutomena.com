@@ -44,7 +44,9 @@ Pusher هو واجهة API للقيام باتصالات آنية **ثنائية
 
 دائما أفضل استعمال **composer** لإدارة الحزم والتبعيات في PHP نظرا لسهولة استعماله وفعاليته مقارنة بتحميل واستدعاء المكتبات يدويا. لتحميل مكبتة Pusher PHP بواسطة composer نقوم بتنفيذ الأمر التالي في نافذة الأوامر CMD :
 
-$ composer require pusher/pusher-php-server
+```bash
+composer require pusher/pusher-php-server
+```
 
 بعد تنفيذ هذا الأمر سيقوم **composer** بتحميل المكتبة ويقوم بإنشاء مجلد جديد اسمه **_vendor_** في نفس المسار الذي نفذنا فيه الأمر، في هذه الحالة داخل مجلد القالب.
 
@@ -58,9 +60,10 @@ $ composer require pusher/pusher-php-server
 
 وفي هذه الحالة أفضل استعمال الحدث الثالث auto-draft_to_publish لأنه ينبثق فقط عند نشر موضوع جديد وليس عند تحديثه أيضا كما هو الحال في الحدثين الآخرين.
 
-إذن سنفتح الملف **_functions.php_** داخل القالب الذي نستخدمه، ثم نقوم بإضافة الشيفرة البرمجية التالية في آخره :
+إذن سنفتح الملف `functions.php` داخل القالب الذي نستخدمه، ثم نقوم بإضافة الشيفرة البرمجية التالية في آخره :
 
-function twentysixteen_new_post_published($post_id) {
+```php
+function twentysixteen_new_post_published(\$post_id) {
 require __DIR__ . '/vendor/autoload.php';
 
     $options = array(
@@ -86,6 +89,7 @@ $pusher->trigger('test_channel', 'NewPostPublished', $data);
 }
 //عند نشر موضوع جديد، قم بتنفيذ الدالة twentysixteen_new_post_published
 add_action( 'auto-draft_to_publish', 'twentysixteen_new_post_published');
+```
 
 لنشرح الكود حتى تتضح الفكرة للجميع :
 
@@ -99,37 +103,44 @@ add_action( 'auto-draft_to_publish', 'twentysixteen_new_post_published');
 
 ### تنصيب مكتبة Pusher JavaScript
 
-استدعاء مكتبة الجافاسكريبت الخاصة بهذه الواجهة سهل للغاية، يكفي إضافة الكود التالي لمنطقة إضافة ملفات الجافاسكريبت في ملف _functions.php_ :
+استدعاء مكتبة الجافاسكريبت الخاصة بهذه الواجهة سهل للغاية، يكفي إضافة الكود التالي لمنطقة إضافة ملفات الجافاسكريبت في ملف `functions.php` :
 
+```php
 wp_enqueue_script( 'twentysixteen-pusher', 'https://js.pusher.com/3.1/pusher.min.js', array(), '', false );
+```
 
 المهم في هذا الصدد هو أن يكون هذا السطر قبل سطر تحميل ملف أكواد الجافاسكريبت الخاصة بك (نسميه مثلا main.js) وذلك على النحو التالي :
 
+```php
 wp_enqueue_script( 'twentysixteen-pusher', 'https://js.pusher.com/3.1/pusher.min.js', array(), '', false );
+wp_enqueue_script( 'twentysixteen-script', get_template_directory_uri() . '/js/main.js', array( 'jquery' ), '', false );
+```
 
-    wp_enqueue_script( 'twentysixteen-script', get_template_directory_uri() . '/js/main.js', array( 'jquery' ), '', false );
+> إذا كنت من المبتدئين في ووردبريس فعليك معاينة [هذا الرابط](https://codex.wordpress.org/Plugin_API/Action_Reference/wp_enqueue_scripts) لمعرفة كيفية إضافة أكواد الجافاسكريبت في الووردبريس.
 
-_إذا كنت من المبتدئين في ووردبريس فعليك معاينة [هذا الرابط](https://codex.wordpress.org/Plugin_API/Action_Reference/wp_enqueue_scripts) لمعرفة كيفية إضافة أكواد الجافاسكريبت في الووردبريس._
+بعد استدعاء مكبتة `pusher.js` بنجاح سنفتح ملف `main.js` ونقوم بإضافة الكود التالي :
 
-بعد استدعاء مكبتة pusher.js بنجاح سنفتح ملف _main.js_ ونقوم بإضافة الكود التالي :
-
+```js
 var pusher = new Pusher('cbcb54ab5c24a9d35c13', {
-encrypted: true
+  encrypted: true
 });
 
 var channel = pusher.subscribe('test_channel');
 
 channel.bind('NewPostPublished', function(data) {
-alert(data.subject);
+  alert(data.subject);
 });
+```
 
 شرح الكود :
 
 1. أولا قمنا بإنشاء كائن اسمه pusher من الكلاس Pusher ونمرر له عدد من المعاملات أهمها كود key الذي حصلنا عليه سابقا (key وليس secret، الأخير لا يجب أن يطلع عليه أحد سواك) أما المعامل الثاني encrypted فهو اختياري كما هو الشأن في مكبتة Pusher PHP.
+
 2. بعد ذلك نقوم بالتسجيل في القناة test_channel (يجب أن يكون نفس الإسم الذي استعملناه في جهة الخادم) بواسطة المتغير pusher ونضمن الكل في متغير جديد اسمه مثلا channel.
+
 3. في الأخير نقوم بالإستماع لحدث NewPostPublished داخل القناة test_channel وننتظر انبثاقه للحصول على المعلومات التي نحصل عليها في دالة الإرجاع Callback عن طريق المعامل data. هنا أظهرنا الرسالة التي أرسلها الخادم والتي أضفناها في الفقرة السابقة (تم نشر موضوع جديد) عن طريق السطر alert(data.subject).
 
-الآن الأمور أصبحت جاهزة، كلما أضفت موضوع جديد سيتم إظهار رسالة لكل المستخدمين المتواجدين على موقعك في ذات الوقت. لقد استعملنا الطريقة الأبسط لتنبيه الزائر وهي عن طريق الدالة alert، ولكنك تستطيع تطوير الموضوع أكثر عن طريق تضمين معلومات أكثر في التنبيه، كعنوان الموضوع ورابطه وعرضه في عنصر <div> يتم إظهاره في الزاوية السفلى للمتصفح على الشكل الذي تريده (تماما كما يفعل الفيسبوك) لمدة 10 ثواني مثلا ثم يختفي... إلخ
+الآن الأمور أصبحت جاهزة، كلما أضفت موضوع جديد سيتم إظهار رسالة لكل المستخدمين المتواجدين على موقعك في ذات الوقت. لقد استعملنا الطريقة الأبسط لتنبيه الزائر وهي عن طريق الدالة alert، ولكنك تستطيع تطوير الموضوع أكثر عن طريق تضمين معلومات أكثر في التنبيه، كعنوان الموضوع ورابطه وعرضه في عنصر `<div>` يتم إظهاره في الزاوية السفلى للمتصفح على الشكل الذي تريده (تماما كما يفعل الفيسبوك) لمدة 10 ثواني مثلا ثم يختفي... إلخ
 
 ## خاتمة
 

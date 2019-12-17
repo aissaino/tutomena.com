@@ -27,20 +27,20 @@ thumbnail: '../thumbnails/react.png'
 
 **React Native** جاء لتجاوز هذه المعضلات، فهو يمكننا من استخدام المكونات الأصلية الخاصة بكل منصة على حدة (أندرويد، iOS) والتعامل معها بواسطة الجافاسكريبت JavaScript.
 
+```jsx
 import React, { Component } from 'react';
 import { AppRegistry, Text } from 'react-native';
 
 class HelloWorldApp extends Component {
-render() {
-return (
-<Text>Hello world!</Text>
-);
-}
+  render() {
+    return <Text>Hello world!</Text>;
+  }
 }
 
 AppRegistry.registerComponent('HelloWorldApp', () => HelloWorldApp);
+```
 
-في هذا المثال نلاحظ استعمال المكون <Text> لإظهار نص على الشاشة، وفي الكواليس يقوم React Native بتحويل هذا المكون إلى عنصر أصلي، مثلا TextView بالنسبة لمنصة أندرويد.
+في هذا المثال نلاحظ استعمال المكون `<Text>` لإظهار نص على الشاشة، وفي الكواليس يقوم React Native بتحويل هذا المكون إلى عنصر أصلي، مثلا TextView بالنسبة لمنصة أندرويد.
 
 والأجمل كذلك أننا نستطيع استخدام أكواد الجافا، Objective-C وسويفت داخل مشروع React Native والعكس صحيح، وهذا بالضبط ما فعله مطورو تطبيق فيسبوك، بعض الأجزاء منه تم تطويرها باستخدام React Native والباقي باستخدام الطريقة الرسمية (Java, Swift,Objective-C).
 
@@ -58,58 +58,64 @@ AppRegistry.registerComponent('HelloWorldApp', () => HelloWorldApp);
 
 لا يعتمد React Native على لغة CSS في تنسيق واجهة المستخدم، بل يقوم بذلك عن طريق الجافاسكريبت نفسها وذلك عن طريق كائنات Objects بخاصيات Properties وقيم Values مثل التي اعتدنا عليها في CSS إلا أنها هنا تكتب بطريقة Camel Case (مثال : backgroundColor عوضا عن background-color).
 
+```jsx
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 
 class LotsOfStyles extends Component {
-render() {
-return (
-<View>
-<Text style={styles.red}>just red</Text>
-<Text style={styles.bigblue}>just bigblue</Text>
-<Text style={[styles.bigblue, styles.red]}>bigblue, then red</Text>
-<Text style={[styles.red, styles.bigblue]}>red, then bigblue</Text>
-</View>
-);
-}
+  render() {
+    return (
+      <View>
+        <Text style={styles.red}>just red</Text>
+        <Text style={styles.bigblue}>just bigblue</Text>
+        <Text style={[styles.bigblue, styles.red]}>bigblue, then red</Text>
+        <Text style={[styles.red, styles.bigblue]}>red, then bigblue</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-bigblue: {
-color: 'blue',
-fontWeight: 'bold',
-fontSize: 30,
-},
-red: {
-color: 'red',
-},
+  bigblue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30
+  },
+  red: {
+    color: 'red'
+  }
 });
 
 AppRegistry.registerComponent('LotsOfStyles', () => LotsOfStyles);
+```
 
 ### استخدام Flexbox
 
 بالإضافة ل Styles، يعتمد React Native في تنسيق الواجهات الرسومية على مكون يدعى Flexbox، وتعمل هذه الخوارزمية تماما بنفس طريقة ال Flexbox المستخدم في لغة CSS داخل تطبيقات الويب مع بعض الإختلافات.
 
+```jsx
 import React, { Component } from 'react';
 import { AppRegistry, View } from 'react-native';
 
 class FlexDirectionBasics extends Component {
-render() {
-return (
-// Try setting \`flexDirection\` to \`column\`.
-<View style={{flex: 1, flexDirection: 'row'}}>
-<View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
-<View style={{width: 50, height: 50, backgroundColor: 'skyblue'}} />
-<View style={{width: 50, height: 50, backgroundColor: 'steelblue'}} />
-</View>
-);
+  render() {
+    return (
+      // Try setting `flexDirection` to `column`.
+      <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View
+          style={{ width: 50, height: 50, backgroundColor: 'powderblue' }}
+        />
+        <View style={{ width: 50, height: 50, backgroundColor: 'skyblue' }} />
+        <View style={{ width: 50, height: 50, backgroundColor: 'steelblue' }} />
+      </View>
+    );
+  }
 }
-};
 
 AppRegistry.registerComponent('AwesomeProject', () => FlexDirectionBasics);
+```
 
-[caption id="attachment_2005" align="aligncenter" width="207"]![استخدام Flexbox في React Native](../images/react-native-flexbox-demo.jpg)](../images/react-native-flexbox-demo.jpg) استخدام Flexbox في React Native\
+![استخدام Flexbox في React Native](../images/react-native-flexbox-demo.jpg)] استخدام Flexbox في React Native
 
 ### Learn Once, Write Anywhere
 

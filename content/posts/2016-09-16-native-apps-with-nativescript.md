@@ -45,9 +45,11 @@ thumbnail: '../thumbnails/mobile.png'
 
 [![تطبيقات الموبايل الأصلية مع NativeScript](../images/nativescript-native-mobile-applications-1.png)](../images/nativescript-native-mobile-applications-1.png)
 
+```js
 var time = new android.text.format.Time();
-time.set( 1, 0, 2015 );
-console.log( time.format( "%D" ) );
+time.set(1, 0, 2015);
+console.log(time.format('%D'));
+```
 
 المثال أعلاه يوضح كيف أنه استطعنا استخدام كائنات جافا Java Objects داخل الجافاسكريبت وكأننا مزجنا بين اللغتين. تم هذا بفضل واجهة جافا الأصلية **J**ava **N**ative **I**nterface التي تعد بمثابة جسر Bridge يمكن كائنات الجافا من المرور للضفة الأخرى عند C++ ومعروف بأن محرك V8 تم بناؤه بلغة البرمجة C++.
 
@@ -63,14 +65,17 @@ console.log( time.format( "%D" ) );
 
 المثال التالي لكيفية الحصول على نسخة تطبيق معين باستخدام NativeScript :
 
+```js
 appversion.getVersionName().then(function(version) {
-console.log(version);
+  console.log(version);
 });
+```
 
 ثلاثة أسطر للحصول على نسخة التطبيق على جميع المنصات، أليس هذا رائعا ؟
 
 لاحظ ماذا عليك فعله لكي تحصل على نفس النتيجة على أندرويد باستعمال جافا :
 
+```java
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
@@ -79,23 +84,26 @@ PackageInfo packageInfo = getApplicationContext()
 .getPackageInfo(getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
 
 System.out.println(packageInfo.versionCode);
+```
 
 وعلى iOS باستخدام لغة البرمجة objective-c :
 
-NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+```objective-c
+NSString version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
 NSLog(@"%@", version);
+```
 
 المهمة أصعب مما كانت عليه مع NativeScript، وهذا مجرد مثال صغير لإيجابيات هذه المنصة.
 
 ### خاتمة
 
-هذا باختصار خلاصة المجهود الذي قام به مطورو الجافاسكريبت حتى الآن لبرمجة **تطبيقات موبايل أصلية** باستخدام تقنيات الويب المعتادة. NativeScript يبدو خيارا يستحق التجربة وقد ظهر من بعده منافس آخر بنفس الفكرة وبلفلسفة مختلفة : إنه [React Native](https://facebook.github.io/react-native/) الذي تقف خلفه شركة Facebook العملاقة ويعتمد على مكتبة React.js في كتابة وترتيب أكواد الجافاسكريبت. قد نقوم في قادم الأيام بكتابة مقال حول الفلسفة التي جاء بها React Native وأوجه الإختلاف بينه وبين **NativeScript**.
+هذا باختصار خلاصة المجهود الذي قام به مطورو الجافاسكريبت حتى الآن لبرمجة **تطبيقات موبايل أصلية** باستخدام تقنيات الويب المعتادة. NativeScript يبدو خيارا يستحق التجربة وقد ظهر من بعده منافس آخر بنفس الفكرة وبلفلسفة مختلفة : إنه [React Native](https://facebook.github.io/react-native/) الذي تقف خلفه شركة Facebook العملاقة ويعتمد على مكتبة **React.js** في كتابة وترتيب أكواد الجافاسكريبت. قد نقوم في قادم الأيام بكتابة مقال حول الفلسفة التي جاء بها **React Native** وأوجه الإختلاف بينه وبين **NativeScript**.
 
 إلى ذلك الحين لا تترددوا في إبداء آرائكم حول الموضوع في صندوق التعليقات، كما سنكون دائما سعداء بالإجابة على استفساراتكم وأسئلتكم.
 
 ---
 
-المراجع :
+### المراجع
 
 - [https://www.smashingmagazine.com/2016/07/cross-platform-native-apps-single-code-set-telerik-nativescript/](https://www.smashingmagazine.com/2016/07/cross-platform-native-apps-single-code-set-telerik-nativescript/)
 - [http://developer.telerik.com/featured/nativescript-works/](http://developer.telerik.com/featured/nativescript-works/)

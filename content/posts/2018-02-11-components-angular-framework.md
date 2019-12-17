@@ -47,16 +47,22 @@ thumbnail: '../thumbnails/angular.png'
 
 أولا يجب تثبيت حزمة [Angular CLI](https://cli.angular.io/) على جهازك، وهي الحزمة الرسمية من أنجولار غرضها تسهيل عدد من المهام على المطورين، مثل إنشاء المشروع، إعداد خادم محلي، فحص الكود إلخ...
 
+```bash
 npm install -g @angular/cli
+```
 
 بعد تثبيت حزمة الأوامر السطرية لأنجولار، سنقوم باستخدامها من أجل إنشاء مشروع جديد على هذا النحو :
 
+```bash
 ng new calculator
+```
 
 calculator هو اسم المجلد الرئيسي للمشروع، وسنقوم بالدخول إليه، بعد انتهاء عملية الإعداد التي بدأناها بواسطة _ng new_، ثم نقوم بتنفيذ الأمر _ng serve_ من أجل بدء تشغيل التطبيق على الخادم المحلي :
 
+```bash
 cd calculator
 ng serve
+```
 
 قم بفتح الرابط *http://localhost:4200/* على المتصفح، وستجد نفسك أمام الصفحة الرئسية للتطبيق الإفتراضي الذي تم إنشاؤه بواسطة _ng new_.
 
@@ -84,7 +90,9 @@ ng serve
 
 أولا، لننشئ مجلد جديد اسمه _calculator_ في المسار _src/app_ وندخل إليه انطلاقا من نافذة الأوامر السطرية، ثم نقوم بتنفيذ الأمر التالي من أجل توليد المكون الجديد :
 
+```bash
 ng generate component calculator
+```
 
 بعد إنتهاء العملية، سنلاحظ أنه تم توليد أربع ملفات داخل المجلد _src/app/calculator_ مع تحديث الملف _app.module.ts_ الذي تكلمنا عليه في السابق.
 
@@ -96,6 +104,7 @@ ng generate component calculator
 - **calculator.component.ts**: إلى جانب ملف قالب HTML، هذا هو الملف الأهم بالنسبة للمكون، ويعتبر المركز الذي تتم فيه كافة العمليات المنطقية الخاصة به (_Controller_).
 - **app.module.ts**: تم تحديث هذا الملف من أجل استيراد المكون _Calculator_ وإضافته للخاصية _declarations_ التي أشرنا إليها في إحدى الفقرات أعلاه.
 
+```ts
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -103,58 +112,59 @@ import { AppComponent } from './app.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 
 @NgModule({
-declarations: [
-AppComponent,
-CalculatorComponent
-],
-imports: [
-BrowserModule
-],
-providers: [],
-bootstrap: [AppComponent]
+  declarations: [AppComponent, CalculatorComponent],
+  imports: [BrowserModule],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
+```
 
 محتوى ملف **calculator.component.ts** هو على الشكل الآتي:
 
+```ts
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-selector: 'app-calculator',
-templateUrl: './calculator.component.html',
-styleUrls: ['./calculator.component.css']
+  selector: 'app-calculator',
+  templateUrl: './calculator.component.html',
+  styleUrls: ['./calculator.component.css']
 })
 export class CalculatorComponent implements OnInit {
+  constructor() {}
 
-constructor() { }
-
-ngOnInit() {
+  ngOnInit() {}
 }
-
-}
+```
 
 لاحظوا الخاصيات (تعرف ب *Metadatas*) بداخل المصمم _Component@_ التي تكلمنا عليها في السابق، وتحديدا **selector** الذي نستخدمه من أجل استدعاء المكون في القوالب الخارجية. وبما أن المكون الرئيسي لتطبيقنا هو AppComponent، فإننا سنقوم بفتح القالب الخاص به app.component.html ونضيف إليه المكون _CalculatorComponent_ بهذا الطريقة :
 
+```html
 <div style="text-align:center">
   <app-calculator></app-calculator>
 </div>
+```
 
-[alert type="info" icon-size="normal"]يمكننا بطبيعة الحال تغيير اسم المحدد app-calculator ونضع الإسم الذي يناسبنا.[/alert]
+> يمكننا بطبيعة الحال تغيير اسم المحدد app-calculator ونضع الإسم الذي يناسبنا.
 
 والآن بالعودة إلى المتصفح سنرى في الصفحة الرئيسية هذه الرسالة :
 
+```terminal
 Calculator Works!
+```
 
 وهي الرسالة التي نجدها في القالب _calculator.component.html_ الخاص بالمكون _CalculatorComponent_.
 
-[alert type="info" icon-size="normal"]حتى لا تضطر لإعادة تنفيذ الأمر **_ng serve_** بعد كل عملية تعديل على الملفات، استخدم بدلا عنه **_ng serve --watch_** الذي يقوم بإعادة جمع الأكواد البرمجية (Bundling) بعد كل عملية حفظ وبعدها إعادة تحميل المتصفح آليا.[/alert]
+> حتى لا تضطر لإعادة تنفيذ الأمر `ng serve` بعد كل عملية تعديل على الملفات، استخدم بدلا عنه `ng serve --watch` الذي يقوم بإعادة جمع الأكواد البرمجية (Bundling) بعد كل عملية حفظ وبعدها إعادة تحميل المتصفح آليا.
 
 إذن ما يجب علينا فعله الآن، هو التعديل على هذا القالب وتعويضه بما يمكننا من حساب مجموع عددين. سنضع قالبا بسيطا لهذا الغرض، عبارة عن حقلين من نوع *number* لإدخال قيمة العددين وزر يقوم بحساب المجموع عند النقر عليه.
 
+```html
 <h1>Calculator Component</h1>
-<input [(ngModel)]="number1" type="number" name="" placeholder="العدد الأول">
-<input [(ngModel)]="number2" type="number" name="" placeholder="العدد الثاني">
+<input [(ngModel)]="number1" type="number" name="" placeholder="العدد الأول" />
+<input [(ngModel)]="number2" type="number" name="" placeholder="العدد الثاني" />
 <button>حساب الجمع</button>
+```
 
 يمكنكم تحسين الشكل والتصميم بإضافة بعض من CSS في ملف *calculator.component.css.*
 
@@ -162,89 +172,89 @@ Calculator Works!
 
 حتى نقوم باستخدام **[(ngModel)]** يجب استيراد وحدة خاصة اسمها **FormsModule** في ملف _app.mdoule.ts_ وإضافتها للخاصية _imports_ داخل المصمم **NgModule@** :
 
+```ts
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 
 @NgModule({
-declarations: [
-AppComponent,
-CalculatorComponent
-],
-imports: [
-BrowserModule,
-FormsModule
-],
-providers: [],
-bootstrap: [AppComponent]
+  declarations: [AppComponent, CalculatorComponent],
+  imports: [BrowserModule, FormsModule],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
+```
 
 الخطوة القادمة هي أن نقوم بتعريف المتغيرين _number1_ و _number2_ في الكلاس _CalculatorComponent_ حتى يتم استقبال قيمة الحقلين فيهما. وإضافة إليهما، نقوم بالتصريح كذلك بمتغير ثالث اسمه *result *لاستخدامه لاحقا في عرض النتيجة.
 
+```ts
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-selector: 'app-calculator',
-templateUrl: './calculator.component.html',
-styleUrls: ['./calculator.component.css']
+  selector: 'app-calculator',
+  templateUrl: './calculator.component.html',
+  styleUrls: ['./calculator.component.css']
 })
 export class CalculatorComponent implements OnInit {
-public number1 : number;
-public number2 : number;
-public result : number;
-constructor() { }
+  public number1: number;
+  public number2: number;
+  public result: number;
+  constructor() {}
 
-ngOnInit() { }
-
+  ngOnInit() {}
 }
+```
 
 من مزايا **TypeScript** أنه يمكننا من تحديد نوع المتغيرات، وهي **number** في هذه الحالة بالنسبة للثلاثة.
 
 الآن سنضيف إلى الكلاس دالة جديدة اسمها add()  على سبيل المثال، بداخلها سنقوم بحساب المجموع وإعطائه للمتغير result.
 
+```ts
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-selector: 'app-calculator',
-templateUrl: './calculator.component.html',
-styleUrls: ['./calculator.component.css']
+  selector: 'app-calculator',
+  templateUrl: './calculator.component.html',
+  styleUrls: ['./calculator.component.css']
 })
 export class CalculatorComponent implements OnInit {
-public number1 : number;
-public number2 : number;
-public result : number;
+  public number1: number;
+  public number2: number;
+  public result: number;
 
-constructor() { }
+  constructor() {}
 
-ngOnInit() { }
+  ngOnInit() {}
 
-public add(){
-this.result = this.number1 + this.number2;
+  public add() {
+    this.result = this.number1 + this.number2;
+  }
 }
-
-}
+```
 
 لم يتبقى لنا الآن سوى استدعاء هذه الدالة عند النقر على الزر button في قالب HTML الخاص بالمكون.
 
 لنفتح ملف _calculator.component.html_ ونقوم بذلك :
 
+```html
 <h1>Calculator Component</h1>
-<input [(ngModel)]="number1" type="number" name="" placeholder="العدد الأول">
-<input [(ngModel)]="number2" type="number" name="" placeholder="العدد الثاني">
+<input [(ngModel)]="number1" type="number" name="" placeholder="العدد الأول" />
+<input [(ngModel)]="number2" type="number" name="" placeholder="العدد الثاني" />
 
 <button (click)="add()">حساب الجمع</button>
 
 <h2>
-    النتيجة : {{result}}
+  النتيجة : {{result}}
 </h2>
+```
 
-لاحظوا بأننا استخدمنا الخاصية **(click)** للإستماع لحدث النقر على الزر _button_ وعند وقوع الحدث نقوم بتنفيذ الدالة add().
+لاحظوا بأننا استخدمنا الخاصية `(click)` للإستماع لحدث النقر على الزر `button` وعند وقوع الحدث نقوم بتنفيذ الدالة `add()`.
 
-وكما ترون، أضفنا كذلك العنصر **<h2>** لعرض المجموع باستخدام التعبير {{result}} ، وهو ما يعني قيمة المتغير _result_ الذي عرفناه بداخل الكلاس _CalculatorComponent_.
+وكما ترون، أضفنا كذلك العنصر `<h2>` لعرض المجموع باستخدام التعبير `{{result}}` ، وهو ما يعني قيمة المتغير _result_ الذي عرفناه بداخل الكلاس _CalculatorComponent_.
 
 [![تطبيق أنجولار](../images/angular-app-result.jpg)](../images/angular-app-result.jpg)
 

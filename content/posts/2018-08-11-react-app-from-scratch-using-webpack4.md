@@ -27,30 +27,36 @@ thumbnail: '../thumbnails/webpack.png'
 
 أولا لنفتح نافذة الأوامر السطرية ونقوم بإنشاء مجلد اسمه **react-from-scratch** وبداخله مجلد واحد اسمه **src** يضم بدوره مجلدين اثنين : **components** و **styles**.
 
+```bash
 mkdir react-from-scratch
 cd react-from-scratch
 mkdir -p src/components src/styles
+```
 
 [![](../images/folders.png)](../images/folders.png)
 
 لتهيئة المشروع، سنقوم بتنفيذ الأمر التالي داخل المجلد react-from-scratch وذلك جريا على عادتنا في جميع المشاريع التي تستخدم مدير الحزم npm :
 
+```bash
 npm init -y
+```
 
 بعد تنفيذ هذا الأمر سيتولد الملف الغني عن التعريف **package.json** :
 
+```json
 {
-"name": "react-from-scratch",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"keywords": [],
-"author": "",
-"license": "ISC"
+  "name": "react-from-scratch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
+```
 
 ## تحميل Webpack
 
@@ -58,19 +64,25 @@ npm init -y
 
 دعونا نقوم بتحميل وتثبيت ويب باك في مشروعنا :
 
+```bash
 npm install webpack webpack-cli --save-dev
+```
 
 هذا الأمر سيقوم بتحميل كل من حزمتي webpack و webpack-cli. الأولى تضم الوظائف الأساسية لمحزم الوحدات Webpack والثانية تتيح لنا إمكانية استخدام أوامر webpack من نافذة الأوامر السطرية _Command line_.
 
 ## تحميل مكتبة React.js
 
+```bash
 npm install react react-dom --save
+```
 
 ## تحميل بابل Babel
 
 حتى تعمل مكتبة React.js بشكل جيد، نحن مطالبون بتثبيت الأداة **Babel** من أجل [تحويل (_Transpile_) أكواد جافاسكريبت ES6](https://www.tutomena.com/web-development/javascript/what-is-transpiling-javascript/) و JSX إلى أكواد جافاسكريبت ES5 مدعومة من كافة المتصفحات.
 
+```bash
 npm install babel-core babel-loader babel-preset-env babel-preset-react --save-dev
+```
 
 قمنا هنا بتحميل 4 حزم :
 
@@ -87,37 +99,38 @@ npm install babel-core babel-loader babel-preset-env babel-preset-react --save-d
 
 لحد الساعة سنضع فيه هذا الكود البسيط :
 
+```js
 class Alert {
-constructor(msg){
-this.msg = msg;
-}
+  constructor(msg) {
+    this.msg = msg;
+  }
 
-    show() {
-    	alert(this.msg);
-    }
-
+  show() {
+    alert(this.msg);
+  }
 }
-var \_alert = new Alert("Hello World");
-\_alert.show();
+var alert = new Alert('Hello World');
+alert.show();
+```
 
 ## إنشاء الملف index.html
 
-في نفس المكان، أي المجلد _src/_، سننشئ ملف html نقوم بتسميته **index.html** ونضمنه الكود التالي :
+في نفس المكان، أي المجلد `src/`، سننشئ ملف html نقوم بتسميته **index.html** ونضمنه الكود التالي :
 
+```html
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React from scratch</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="root"></div>
-</body>
-
+  </body>
 </html>
+```
 
 ## تعيين ملفي الدخول والإخراج في إعدادات Webpack
 
@@ -125,15 +138,17 @@ var \_alert = new Alert("Hello World");
 
 لهذا الغرض، سنقوم بإنشاء ملف اسمه **webpack.config.js** في **المجلد الجذر** للمشروع (_react-from-scratch_)، وسنبدأ فيه إعداداتنا بتعيين المسار لكل من ملفي الدخول (Entry file) والإخراج (Output file).
 
-const path = require("path");
+```js
+const path = require('path');
 
 module.exports = {
-entry: "./src/index.js",
-output: {
-path: path.join(\_\_dirname, "/dist"),
-filename: "bundle.js"
-}
+  entry: './src/index.js',
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: 'bundle.js'
+  }
 };
+```
 
 ملف الإخراج **bundle.js** ـ الذي يوجد في المجلد **dist/** ـ هو الملف الذي سيجمع فيه Webpack كافة أكواد وملفات جافاسكريبت التي يستخدمها التطبيق. يعني أن الملف الذي سنقوم باستدعائه في الأخير في المتصفح هو **bundle.js**.
 
@@ -145,58 +160,63 @@ filename: "bundle.js"
 
 ال **Loader** هو الذي يؤدي هذه الخدمة في بيئة **webpack**، فكل نوع من الملفات يمكن استدعاؤه وتحزيمه كوحدة جافاسكريبت (Javascript Module) بالإستعانة بال Loader الموافق له.
 
-const path = require("path");
+```js
+const path = require('path');
 
 module.exports = {
-entry: "./src/index.js",
-output: {
-path: path.join(\_\_dirname, "/dist"),
-filename: "bundle.js"
-},
-module: {
-rules: [
-{
-test: /\.js$/,
+  entry: './src/index.js',
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        },
+          loader: 'babel-loader'
+        }
       },
       {
         test: /\.css$/,
-use: ["style-loader", "css-loader"]
-}
-]
-}
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  }
 };
+```
 
 **css-loader** هو المكلف باستخلاص أكواد CSS التي تم استدعاؤها باستخدام **require** أو **import** ثم يقوم بتجميعها على شكل string.
 
-**style-loader** يأخذ هذا string ويقوم بوضعه داخل وسم _<style>_ في ملف أو صفحة HTML (في مثالنا _index.html_).
+**style-loader** يأخذ هذا string ويقوم بوضعه داخل وسم `<style>` في ملف أو صفحة HTML (في مثالنا _index.html_).
 
 لكي يتمكن Webpack من استخدامهما يجب أولا أن نقوم بتحميلهما من مستودع npm كما فعلنا سابقا مع **babel-loader**.
 
+```bash
 npm install css-loader style-loader --save-dev
+```
 
 ## إعداد Babel
 
 حتى نستطيع إعداد بابل لاستخدام ال Presets التي قمنا سابقا بتحميلها (env و react)، يجب علينا إنشاء ملف اسمه **_babelrc._** في المجلد الرئيسي للمشروع، يعني بجوار **package.json** و **webpack.config.js**.
 
+```json
 {
-"presets": [
-"env",
-"react"
-]
+  "presets": ["env", "react"]
 }
+```
 
 ## حان الوقت لتشغيل Webpack
 
 لنقم بإضافة هذين السكريبتين إلى المنطقة المخصصة لذلك في ملف **package.json** :
 
+```json
 "scripts": {
 "dev": "webpack --mode development --watch",
 "build": "webpack --mode production"
 }
+```
 
 السكريبت الأول (**dev**) يقوم بتشغيل **webpack** في **وضع التطوير**، والبارامتر **watch--** يعني بأنه كلما أجرينا تغييرا في الكود فإن Webpack سيقوم تلقائيا بإعادة عملية التجميع والتحزيم، يعني أننا لسنا مضطرين لإعادة تنفيذ الأمر **npm run dev** في كل مرة نقوم بها بإجراء تعديل على أحد الملفات المصدرية للمشروع.
 
@@ -204,9 +224,11 @@ npm install css-loader style-loader --save-dev
 
 الآن نستطيع تنفيذ الأمر **dev** كما يلي :
 
+```bash
 npm run dev
+```
 
-سنلاحظ بعد انتهاء عملية التحزيم إنشاء مجلد جديد اسمه **dist/** وبداخله ملف جافاسكريبت باسم **_bundle.js_**، وفق إعداداتنا على مستوى ملف _webpack.config.js_ :) هذا الملف يضم أكواد **جافاسكريبت ES5** مدعومة ومفهومة من كافة المتصفحات الكبيرة.
+سنلاحظ بعد انتهاء عملية التحزيم إنشاء مجلد جديد اسمه **dist/** وبداخله ملف جافاسكريبت باسم `bundle.js`، وفق إعداداتنا على مستوى ملف _webpack.config.js_ :) هذا الملف يضم أكواد **جافاسكريبت ES5** مدعومة ومفهومة من كافة المتصفحات الكبيرة.
 
 إذن webpack يشتغل كما يجب ومن دون أخطاء :D
 
@@ -216,43 +238,48 @@ npm run dev
 
 في داخل المجلد **components** سنقوم بإنشاء ملف اسمه _App.js_ ونضع فيه الشفرة البرمجية الآتية :
 
-import React, { Component } from "react";
+```jsx
+import React, { Component } from 'react';
 
 import '../styles/App.css';
 
 class App extends Component {
-render() {
-return (
-
-<div>
-<h1>My React App!</h1>
-</div>
-);
-}
+  render() {
+    return (
+      <div>
+        <h1>My React App!</h1>
+      </div>
+    );
+  }
 }
 
 export default App;
+```
 
-نلاحظ بأننا قمنا باستدعاء ملف **_App.css_**، لنقم بإنشاء هذا الملف في داخل المجلد **styles**، ولنضع فيه ما يلي :
+نلاحظ بأننا قمنا باستدعاء ملف `App.css`، لنقم بإنشاء هذا الملف في داخل المجلد **styles**، ولنضع فيه ما يلي :
 
+```css
 h1 {
-font-family: arial;
-font-size: 48px;
-color: #444;
-text-align: center;
+  font-family: arial;
+  font-size: 48px;
+  color: #444;
+  text-align: center;
 }
+```
 
 قمنا باستدعاء هذا الملف حتى نتأكد من أن كلا من css-loader و style-loader يعملان بشكل جيد.
 
-لنعد الآن إلى الملف **_src/index.js_** الذي أنشأناه سابقا ووضعنا فيه كودا تجريبيا.
+لنعد الآن إلى الملف `src/index.js` الذي أنشأناه سابقا ووضعنا فيه كودا تجريبيا.
 
 لنمسح ذلك الكود التجريبي ولنعوضه بما يلي :
 
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./components/App.js";
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App.js';
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
+```
 
 ## تحميل الإضافة html-webpack-plugin
 
@@ -262,40 +289,44 @@ ReactDOM.render(<App />, document.getElementById("root"));
 
 اطمئنوا، فإضافة html-webpack-plugin هنا لمساعدتنا في توليد ملف html داخل المجلد dist/ وتحقن فيه **بشكل آلي** ملف جافاسكريبت **_bundle.js_** المُخرَج.
 
+```bash
 npm install html-webpack-plugin --save-dev
+```
 
 بعد تحميل حزمة **html-webpack-plugin**، سيكون علينا إتمام عملية إعدادها من ملف webpack.config.js :
 
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+```js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-entry: "./src/index.js",
-output: {
-path: path.join(\_\_dirname, "/dist"),
-filename: "bundle.js"
-},
-module: {
-rules: [
-{
-test: /\.js$/,
+  entry: './src/index.js',
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        },
+          loader: 'babel-loader'
+        }
       },
       {
         test: /\.css$/,
-use: ["style-loader", "css-loader"]
-}
-]
-},
-plugins: [
-new HtmlWebpackPlugin({
-template: "./src/index.html"
-})
-]
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    })
+  ]
 };
+```
 
 سيقوم ويب باك بإنشاء ملف اسمه **index.html** وفق القالب src/index.html وسيقوم بحقن السكريبت bundle.js أسفله بشكل آلي.
 
@@ -309,33 +340,37 @@ template: "./src/index.html"
 
 [![](../images/webpack-react-output-html.png)](../images/webpack-react-output-html.png)
 
-1. تم حقن المكون **<App>** داخل العنصر **div#root**.
-2. تمت إضافة محتوى الملف **App.css** إلى الوسم **<style>**.
-3. تم استدعاء ملف الجافاسكريبت _bundle.js_ أسفل الصفحة، تحديدا قبل إغلاق الوسم **<body>**.
+1. تم حقن المكون `<App>` داخل العنصر **div#root**.
+2. تمت إضافة محتوى الملف `App.css` إلى الوسم `<style>`.
+3. تم استدعاء ملف الجافاسكريبت _bundle.js_ أسفل الصفحة، تحديدا قبل إغلاق الوسم `<body>`.
 
 ## نقطة سلبية
 
-إلى الآن تطبيقنا يشتغل بشكل جيد، ولكننا مطالبون كما لاحظتم بفتح الملف index.html بشكل يدوي في المتصفح، وبعد كل عملية تعديل على الملفات المصدرية يجب تحديث الصفحة لكي نرى النتيجة :-? كما أنه كما رأيتم، فتحنا الصفحة باستخدام البروتوكول  **//:file** لأننا لا نتوفر على أي خادم ويب محلي (_localhost_). هذه الطريقة غير عملية وستثبت محدوديتها في العديد من الحالات (مثلا عند القيام بطلبات Ajax إلخ...).
+إلى الآن تطبيقنا يشتغل بشكل جيد، ولكننا مطالبون كما لاحظتم بفتح الملف index.html بشكل يدوي في المتصفح، وبعد كل عملية تعديل على الملفات المصدرية يجب تحديث الصفحة لكي نرى النتيجة :-? كما أنه كما رأيتم، فتحنا الصفحة باستخدام البروتوكول  `file://` لأننا لا نتوفر على أي خادم ويب محلي (_localhost_). هذه الطريقة غير عملية وستثبت محدوديتها في العديد من الحالات (مثلا عند القيام بطلبات Ajax إلخ...).
 
 ## الحل في Webpack-dev-server
 
 هناك حزمة npm تقوم بتوفير كل تلك المزايا الناقصة عوض محاولة إضافتها بأنفسنا من الصفر، إنها حزمة [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
 
+```bash
 npm install webpack-dev-server --save-dev
+```
 
 سنقوم بإجراء تعديل على السكريبت **dev** في ملف package.json، على اعتبار أن webpack-dev-server يهدف أولا وأساسا لجعل حياة المطور في **وضع التطوير** أكثر سهولة وعملية.
 
+```json
 "scripts": {
 "dev": "webpack-dev-server --mode development --open --hot",
 ...
 }
+```
 
 قمنا بإضافة معاملين اثنين :
 
-- **open--** : من أجل فتح المشروع **بشكل آلي** في المتصفح.
-- **hot--** : تحديث الصفحة **أوتوماتيكيا** بعد كل عملية تعديل على الكود.
+- `--open` : من أجل فتح المشروع **بشكل آلي** في المتصفح.
+- `--hot` : تحديث الصفحة **أوتوماتيكيا** بعد كل عملية تعديل على الكود.
 
-إذن بعد تنفيذ الأمر npm run dev ، سيفتح المتصفح مشروعنا وتظهر لنا هذه الصفحة الجميلة :-)
+إذن بعد تنفيذ الأمر `npm run dev` ، سيفتح المتصفح مشروعنا وتظهر لنا هذه الصفحة الجميلة :-)
 
 [![](../images/webpack-react-2.png)](../images/webpack-react-2.png)
 
@@ -353,7 +388,7 @@ npm install webpack-dev-server --save-dev
 
 ---
 
-**مراجع :**
+#### مراجع
 
 - [Hackernoon.com](https://hackernoon.com/how-to-build-a-react-project-from-scratch-using-webpack-4-and-babel-56d4a26afd32)
 - [Webpack.js.org](https://webpack.js.org/configuration/dev-server/)

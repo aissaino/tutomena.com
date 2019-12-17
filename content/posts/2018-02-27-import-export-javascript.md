@@ -19,29 +19,30 @@ thumbnail: '../thumbnails/js.png'
 
 ## استيراد وتصدير الوحدات على طريقة ES5
 
-تعرف كذلك بطريقة **CommonJS**، وفيها يتم استيراد الوحدات عن طريق الدالة **()require** وتصديرها بواسطة التعبير **module.exports**.
+تعرف كذلك بطريقة **CommonJS**، وفيها يتم استيراد الوحدات عن طريق الدالة `()require` وتصديرها بواسطة التعبير **module.exports**.
 
 هذا مثال بسيط على استيراد الوحدات في **React.js** على طريقة **ES5.**
 
+```jsx
 //App.js
 const React = require('react');
 const Product = require('./Product');
 require('./App.css');
 
 class App extends React.Component {
-render() {
-return (
-
-<div className="App">
-<div className="products">
-<Product title="iPhone 8 Plus iPhone 7 Plus Screen Protector"/>
-<Product title="Samsung Galaxy J7 Pro (32GB) J730G/DS"/>
-<Product title="Apple 13'' MacBook Pro"/>
-</div>
-</div>
-);
+  render() {
+    return (
+      <div className="App">
+        <div className="products">
+          <Product title="iPhone 8 Plus iPhone 7 Plus Screen Protector" />
+          <Product title="Samsung Galaxy J7 Pro (32GB) J730G/DS" />
+          <Product title="Apple 13'' MacBook Pro" />
+        </div>
+      </div>
+    );
+  }
 }
-}
+```
 
 نلاحظ بأننا قمنا باستيراد مكتبة **react** في أول سطر، وهي تكون موجودة عادة في مجلد _/node_modules_ و **Node.js** يعرف جيدا أين وكيف يجد كل هذه التبعيات داخل هذا المجلد.
 
@@ -53,22 +54,21 @@ return (
 
 **ليس من الضروري تعيين الإمتداد js. عند استيراد الملفات في جافاسكريبت، فقط require('Product')  عوض require('Product.js') .**
 
-الملف _Product.js_ بسيط :
+الملف `Product.js` بسيط :
 
+```js
 const React = require('react');
 
-const Product = (props) => (
-
-<h2>{props.title}</h2>
-)
+const Product = props => <h2>{props.title}</h2>;
 
 module.exports = Product;
+```
 
-السطر الأول كما رأينا سابقا هو استيراد ل React، وأسفله الدالة أو المكون **Product** الذي يقوم بعرض عنوان المنتج داخل وسم **<h2>**.
+السطر الأول كما رأينا سابقا هو استيراد ل React، وأسفله الدالة أو المكون `Product` الذي يقوم بعرض عنوان المنتج داخل وسم `<h2>`.
 
 [![](../images/require-es5-react.jpg)](../images/require-es5-react.jpg)
 
-ما يهمنا بالدرجة الأولى في هذا الملف هو السطر الأخير. بدون **module.exports** لن نتمكن من من تصدير واستيراد هذه الوحدة من أي مكان وبالتالي تصبح بلا جدوى!
+ما يهمنا بالدرجة الأولى في هذا الملف هو السطر الأخير. بدون `module.exports` لن نتمكن من من تصدير واستيراد هذه الوحدة من أي مكان وبالتالي تصبح بلا جدوى!
 
 عندما نطلب من **Node.js** أن يستورد وحدة من ملف معين، فإنه يذهب ويقرأ ذلك الملف ويبحث عن التعبير **module.exports** للتأكد من توفر هذه الوحدة للإستيراد أم لا.
 
@@ -76,33 +76,34 @@ module.exports = Product;
 
 في المثال السابق قمنا باستيراد وحدة واحدة فقط من الملف _Product.js،_ وهي المكون *Product.* ماذا لو كان علينا أن نجمع عدة وحدات في ملف واحد ونقوم بتصديرها كلها ؟ هذا ممكن بطبيعة الحال والطريقة سهلة :
 
+```js
 module.exports = {
-Product: Product,
-Other: Other
-}
+  Product: Product,
+  Other: Other
+};
+```
 
 وتكون طريقة الإستدعاء كالتالي :
 
-var {Product} = require('./Product');
-var {Other} = require('./Product');
+```js
+var { Product } = require('./Product');
+var { Other } = require('./Product');
+```
 
 ## استخدام طريقة ES6 الحديثة
 
 فكرة الوحدات بطريقة **ES6** هي نفسها مقارنه مع طريقة **ES5**، ولكن هناك اختلاف بسيط في التركيب أو _Syntax_. عوض استخدام require نستخدم الكلمة **import**، وعندما نريد تصدير وحدة واحدة فقط من ملف جافاسكريبت (_نعتبرها افتراضية في هذه الحالة_) فإننا نستعمل التعبير export default :
 
+```jsx
 //Product.js
 import React from 'react';
 
-const Product = (props) => (
-
-    <h2>{props.title}</h2>
-
-)
+const Product = props => <h2>{props.title}</h2>;
 
 export default Product;
+```
 
----
-
+```jsx
 //App.js
 import React from 'react';
 import Product from './Product';
@@ -110,28 +111,26 @@ import Product from './Product';
 import './App.css';
 
 ...
+```
 
 لسنا على مجبرين على استخدام _default_ هنا، ولكن بدون استخدامها سيكون علينا استخدام المعقوفتين { } عند استدعاء الوحدة.
 
-import {Product} from './Product';
+```js
+import { Product } from './Product';
+```
 
 أما إذا أردنا أن نعرض عدة وحدات للتصدير، فنقوم بما يلي :
 
+```js
 //Product.js
 import React from 'react';
 
-export const Product = (props) => (
+export const Product = props => <h2>{props.title}</h2>;
 
-<h2>{props.title}</h2>
-)
+export const Other = props => <h2>Just an other component!</h2>;
+```
 
-export const Other = (props) => (
-
-<h2>Just an other component!</h2>
-)
-
----
-
+```js
 //App.js
 import React from 'react';
 import {Product, Other} from './Product';
@@ -139,6 +138,7 @@ import {Product, Other} from './Product';
 import './App.css';
 
 ...
+```
 
 نقوم فقط بوضع كلمة **export** قبل الدالة أو الكلاس أو أي كائن نريد تصديره.
 

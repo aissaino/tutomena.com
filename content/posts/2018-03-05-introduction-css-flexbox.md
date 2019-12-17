@@ -20,7 +20,7 @@ thumbnail: '../thumbnails/css3.png'
 
 يتكون تصميم FlexBox من جزئين رئيسين : الحاوي (_Container_) والأبناء.
 
-لنأخذ مثال يضم ثلاثة عناصر من نوع <div>.
+لنأخذ مثال يضم ثلاثة عناصر من نوع `<div>`.
 
 الحالة البدئية لكل هذه العناصر هي كما نعرف **Block** وبالتالي فإنها ستظهر عموديا واحدة فوق الأخرى.
 
@@ -42,17 +42,21 @@ thumbnail: '../thumbnails/css3.png'
 
 يمكننا أن نطلب من هذا الأب أن يقوم بوضع أبناء بشكل عمودي عن طريق الخاصية flex-direction :
 
+```css
 .container {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
+```
 
 ويمكن كذلك عرض العناصر عموديا بشكل معكوس باستخدام الخاصية flex-direction مع إعطائها القيمة column-reverse  :
 
+```css
 .container {
-display: flex;
-flex-direction: column-reverse;
+  display: flex;
+  flex-direction: column-reverse;
 }
+```
 
 [![Flex Column Reverse](../images/flex-column-reverse.png)](../images/flex-column-reverse.png)
 
@@ -62,10 +66,12 @@ flex-direction: column-reverse;
 
 أما إذا أردنا عرض العناصر الأبناء في الطرف الآخر فنستعين بالخاصية justify-content  للأب، ونعطيها القيمة flex-end :
 
+```css
 .container {
-display: flex;
-justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
+```
 
 [![](../images/flex-end-property.png)](../images/flex-end-property.png)
 
@@ -75,10 +81,12 @@ justify-content: flex-end;
 
 أما إذا أردنا مثلا عرض العنصر الأخير فقط في الجهة الأخرى، فنستخدم في هذه الحالة الخاصية margin-left: auto التي تعطى لهذا الإبن :
 
+```css
 .item:last-child {
-background: #000000;
-margin-left: auto;
+  background: #000000;
+  margin-left: auto;
 }
+```
 
 ## [![](../images/flex-margin-auto.png)](../images/flex-margin-auto.png)الخاصية flex
 
@@ -98,17 +106,19 @@ margin-left: auto;
 
 تستخدم القيمة **align-items** من أجل التحكم في كيفية العرض على المحور العمودي.
 
+```css
 .container {
-display: flex;
-height: 200px;
-align-items: center;
-background: yellow;
+  display: flex;
+  height: 200px;
+  align-items: center;
+  background: yellow;
 }
 .item {
-padding: 10px;
-color: #ffffff;
-flex: 1;
+  padding: 10px;
+  color: #ffffff;
+  flex: 1;
 }
+```
 
 [![Flexbox align-items](../images/flex-align-items.png)](../images/flex-align-items.png)
 
@@ -125,15 +135,17 @@ flex: 1;
 
 مثلا نستطيع عرض العنصر الثالث قبل العنصر الأول والثاني فقط بإعطائه order: 1 و إعطاء العنصرين الآخرين قيمتين أكبر من 1.
 
+```css
 .item:first-child {
-order: 2;
+  order: 2;
 }
 .item:nth-child(2) {
-order: 3
+  order: 3;
 }
 .item:last-child {
-order: 1;
+  order: 1;
 }
+```
 
 [![Flex order property](../images/flex-order.png)](../images/flex-order.png)
 

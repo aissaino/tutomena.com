@@ -47,7 +47,7 @@ thumbnail: '../thumbnails/react.png'
 </html>
 ```
 
-نلاحظ أنها صفحة تقريبا فارغة، لا تتضمن سوى <div> وأسفل منه ملف جافاسكريبت app.js يتم استدعاؤه.
+نلاحظ أنها صفحة تقريبا فارغة، لا تتضمن سوى `<div>` وأسفل منه ملف جافاسكريبت app.js يتم استدعاؤه.
 
 هكذا تبدو تطبيقات الويب أحادية الصفحة في كل أطر عمل جافاسكريبت الأخر (Vue.js ،Angular إلخ...).
 
@@ -88,7 +88,7 @@ thumbnail: '../thumbnails/react.png'
 
 ### shared/App.js
 
-في الملف shared/App.js نجد مكون React عادي :
+في الملف `shared/App.js` نجد مكون React عادي :
 
 ```js
 import React from 'react';
@@ -106,7 +106,7 @@ export default App;
 
 ### server/index.js
 
-أما الملف server/index.js فيسكون على هيئة كهذه :
+أما الملف `server/index.js` فيسكون على هيئة كهذه :
 
 ```js
 import React from 'react';
@@ -132,15 +132,15 @@ app.listen(process.env.PORT || 3000, () => {
 
 function htmlTemplate(reactDom) {
   return `
-<!DOCTYPE html>
-<head>
-<title>Isomorphic React Application</title>
-</head>
-<body>
-<div id="root">${reactDom}</div>
-<script src="/bundle.js"></script>
-</body>
-</html>
+  <!DOCTYPE html>
+    <head>
+      <title>Isomorphic React Application</title>
+    </head>
+    <body>
+      <div id="root">${reactDom}</div>
+      <script src="/bundle.js"></script>
+    </body>
+  </html>
 `;
 }
 ```
@@ -169,7 +169,7 @@ app.get('*', (req, res) => {
 });
 ```
 
-هنا نقول لإكسبريس أن يقوم بتحويل المكون <App/> إلى كود Html على شكل String وذلك عن طريق الوظيفة **renderToString**.
+هنا نقول لإكسبريس أن يقوم بتحويل المكون `<App/>` إلى كود Html على شكل String وذلك عن طريق الوظيفة **renderToString**.
 
 بعد ذلك يتم تقديم هذا Html للمتصفح عن طريق **res.send**.
 
@@ -177,20 +177,22 @@ app.get('*', (req, res) => {
 
 الملف الأخير الذي يخصنا في هذا المثال هو browser/index.js:
 
-import React from "react";
-import ReactDOM from "react-dom";
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import App from "../shared/App";
+import App from '../shared/App';
 
-ReactDOM.hydrate(<App />, document.getElementById("root"));
+ReactDOM.hydrate(<App />, document.getElementById('root'));
+```
 
-نرى بأن هذا الملف بسيط للغاية، فقط قمنا باستيراد المكون **<App/>** وركبناه في العنصر **div#root**.
+نرى بأن هذا الملف بسيط للغاية، فقط قمنا باستيراد المكون `<App/>` وركبناه في العنصر **div#root**.
 
 النقطة الوحيدة المثيرة للإنتباه في هذا الملف هي أننا استخدمنا الوظيفة **ReactDOM.hydrate** عوض ReactDOM.render. وفي الحقيقة الوظيفتان تقومان بنفس الدور، الفرق أن hydrate مصممة خصيصا للحالة التي يتم فيها تقديم كود HTML المكون بواسطة renderToString، يعني حالة Server Side Rendering.
 
 - [هذا الرابط يعطي معلومات وتفاصيل أكثر عن ReactDOM.hydrate](https://reactjs.org/docs/react-dom.html).
 
-هكذا عندما نقوم بتشغيل المشروع على المتصفح - عن طريق **npm run dev** - سنلاحظ بأن الشفرة المصدرية للصفحة موجودة بالكامل، لأنه تم توليدها وتقديمها من طرف الخادم.
+هكذا عندما نقوم بتشغيل المشروع على المتصفح - عن طريق `npm run dev` - سنلاحظ بأن الشفرة المصدرية للصفحة موجودة بالكامل، لأنه تم توليدها وتقديمها من طرف الخادم.
 
 [![](../images/react-ssr-source-code.png)](../images/react-ssr-source-code.png)
 

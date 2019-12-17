@@ -20,7 +20,7 @@ thumbnail: '../thumbnails/android.png'
 
 - أندرويد ستوديو (نسخة 1.0 أو أعلى).
 - استهداف المستوى 14 أو أعلى من الواجهة البرمجية لأندرويد Android API Level.
-- فتح حساب في موقع **Admob.com.**
+- فتح حساب في موقع **Admob.com**.
 
 ## الخطوة الأولى : إنشاء الإعلانات في منصة ادموب
 
@@ -54,6 +54,7 @@ thumbnail: '../thumbnails/android.png'
 
 خدمات **Google Play Services Ads** تتطلب من التطبيق صلاحيات الوصول إلى الإنترنت **INTERNET** و **ACCESS_NETWORK_STATE** للإتصال بمنصة Admob. هذه الصلاحيات تضاف لملف AndroidManifest.xml على هذا النحو :
 
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -80,13 +81,15 @@ thumbnail: '../thumbnails/android.png'
     </application>
 
 </manifest>
+```
 
 ## الخطوة الرابعة: إظهار إعلان البانر
 
 ### إعداد ملف ال View الخاص ب MainActivity
 
-سنقوم بفتح الملف **main_acitivity.xml** الموجود بداخل المجلد app/src/main/res/layout  ثم نضيف إليه المكون الخاص بإعلان البانر **com.google.android.gms.ads.AdView** :
+سنقوم بفتح الملف `main_acitivity.xml` الموجود بداخل المجلد `app/src/main/res/layout`  ثم نضيف إليه المكون الخاص بإعلان البانر `com.google.android.gms.ads.AdView` :
 
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -117,25 +120,29 @@ tools:context="com.tutomena.admobproject.MainActivity">
     </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>
+```
 
-### تحرير ملف MainActivity.java
+### تحرير ملف `MainActivity.java`
 
-سنبدأ هذه المرحلة بفتح الملف **MainActivity.java** الموجود داخل المجلد app/src/main/java ثم نضيف إليه الكود البرمجي التالي داخل الدالة **onCreate**.
+سنبدأ هذه المرحلة بفتح الملف `MainActivity.java` الموجود داخل المجلد `app/src/main/java` ثم نضيف إليه الكود البرمجي التالي داخل الدالة `onCreate`.
 
+```java
 MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
 
 mAdView = (AdView) findViewById(R.id.adView);
 AdRequest adRequest = new AdRequest.Builder().build();
 mAdView.loadAd(adRequest);
+```
 
-الدالة **MobileAds.initialize** تقوم بتهيئة ال SDK الخاص بإعلانات ادموب، وكما تلاحظون فإنها تقبل رمز الوحدة الإعلانية Ad unit IDكمعامل ثاني.
+الدالة `MobileAds.initialize` تقوم بتهيئة ال SDK الخاص بإعلانات ادموب، وكما تلاحظون فإنها تقبل رمز الوحدة الإعلانية Ad unit IDكمعامل ثاني.
 
-بعد ذلك نقوم بإضافة ثلاثة أسطر برمجية أخرى تتكفل بإظهار الوحدة الإعلانية داخل المكون com.google.android.gms.ads.AdView الذي أضفناه سابقا لملف main_activity.xml.
+بعد ذلك نقوم بإضافة ثلاثة أسطر برمجية أخرى تتكفل بإظهار الوحدة الإعلانية داخل المكون `com.google.android.gms.ads.AdView` الذي أضفناه سابقا لملف `main_activity.xml`.
 
-[alert type="info" icon-size="normal"]رمز الوحدة الإعلانية ca-app-pub-3940256099942544/6300978111 الذي استخدمناه في هذا الدرس تجريبي فقط، عليك تعويضه بالرمز الذي حصلت عليه من حسابك آدموب كما شرحنا ذلك في مرحلة سابقة من الدرس.[/alert]
+> رمز الوحدة الإعلانية `ca-app-pub-3940256099942544/6300978111` الذي استخدمناه في هذا الدرس تجريبي فقط، عليك تعويضه بالرمز الذي حصلت عليه من حسابك آدموب كما شرحنا ذلك في مرحلة سابقة من الدرس.
 
-وهذا المحتوى الكامل لملف MainActivity.java :
+وهذا المحتوى الكامل لملف `MainActivity.java` :
 
+```java
 package com.tutomena.admobproject;
 
 import android.support.v7.app.AppCompatActivity;
@@ -162,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+```
 
 الآن أصبح بإمكاننا تجربة التطبيق في هاتفنا أو من خلال محاكي Emulator أندرويد ستوديو، وإذا جرت الأمور كلها على ما يرام فمن المفترض أن تحصل على نتيجة مشابهة لما في هذه الصورة :
 
@@ -171,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
 إظهار الإعلان البيني ليس أقل بساطة من إظهار إعلان البانر، كل ما علينا فعله هو إضافة زر لملف main_activity.xml وعند النقر عليه يظهر إعلان **Interstitial** ليملأ الشاشة.
 
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -209,24 +218,28 @@ tools:context="com.tutomena.admobproject.MainActivity">
     </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>
+```
 
 بعد ذلك سنعود لملف الجافا **MainActivitiy.java** ونضيف هذه الأسطر البرمجية داخل الدالة **onCreate** تحت الكود الذي أضفناه سابقا والخاص بإعلان البانر.
 
+```java
 mInterstitialAd = new InterstitialAd(this);
 mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
 mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
 Button showInterstitialButton = (Button) findViewById(R.id.show_interstitial_btn);
+
 showInterstitialButton.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View v) {
-if (mInterstitialAd.isLoaded()) {
-mInterstitialAd.show();
-} else {
-Log.d("TAG", "The interstitial wasn't loaded yet.");
-}
-}
+    @Override
+    public void onClick(View v) {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+    }
 });
+```
 
 في السطر الأول قمنا بإنشاء إعلان بيني برمجيا عن طريق الكلاس **InterstitialAd** ثم مررنا له رمز الوحدة الإعلانية على شكل بارامتر عن طريق الدالة **setAdUnitId** ثم قلنا له، بواسطة الدالة **loadAd،** أن يهيئ نفسه للظهور في أي لحظة يطلب منه ذلك :)
 
@@ -238,8 +251,9 @@ Log.d("TAG", "The interstitial wasn't loaded yet.");
 
 وهذه المحتويات النهائية لكل ملف على حدة :
 
-#### ملف AndroidManifest.xml
+#### ملف `AndroidManifest.xml`
 
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -266,9 +280,11 @@ Log.d("TAG", "The interstitial wasn't loaded yet.");
     </application>
 
 </manifest>
+```
 
-#### ملف MainActivity.java
+#### ملف `MainActivity.java`
 
+```java
 package com.tutomena.admobproject;
 
 import android.support.v7.app.AppCompatActivity;
@@ -316,9 +332,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+```
 
-#### ملف main_activity.xml
+#### ملف `main_activity.xml`
 
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -357,6 +375,7 @@ tools:context="com.tutomena.admobproject.MainActivity">
     </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>
+```
 
 ## نهاية الدرس
 

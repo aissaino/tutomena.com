@@ -12,7 +12,7 @@ tags:
 thumbnail: '../thumbnails/angular.png'
 ---
 
-رأينا في [درس سابق أن إطار العمل أنجولار يعتمد على مفهوم المكونات](https://www.tutomena.com/web-development/javascript/components-angular-framework/) (_Components_) بشكل كامل، وشرحنا معنى المكونات وطريقة إنشائها وإضافتها في تطبيقات Angular. في درس اليوم، سنكتشف معا مفهوما آخرا له أهمية قصوى في إطار العمل أنجولار : **الخدمات** أو _Services_.
+رأينا في [درس سابق أن إطار العمل أنجولار يعتمد على مفهوم المكونات](https://www.tutomena.com/web-development/javascript/components-angular-framework/) (Components) بشكل كامل، وشرحنا معنى المكونات وطريقة إنشائها وإضافتها في تطبيقات Angular. في درس اليوم، سنكتشف معا مفهوما آخرا له أهمية قصوى في إطار العمل أنجولار : **الخدمات** أو **Services**.
 
 ## لماذا الخدمات في أنجولار ؟
 
@@ -22,14 +22,16 @@ thumbnail: '../thumbnails/angular.png'
 
 في هذا الدرس سنقوم بتطبيق هذه الفكرة عن طريق جلب بيانات وهمية (_fake data_) من خادم بعيد (_Remote server_) وإظهارها في الصفحة الرئيسية لتطبيقنا.
 
-سنقوم باستخدام واجهة [JSONPlaceholder](https://jsonplaceholder.typicode.com/) لهذا الغرض. من خلال النقطة **posts/** نستطيع جلب عدد من المقالات الوهمية، كل مقال يكون على الشكل التالي :
+سنقوم باستخدام واجهة [JSONPlaceholder](https://jsonplaceholder.typicode.com/) لهذا الغرض. من خلال النقطة `/posts` نستطيع جلب عدد من المقالات الوهمية، كل مقال يكون على الشكل التالي :
 
+```json
 {
-"userId": 1,
-"id": 1,
-"title": "Sunt aut facere repellat",
-"body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+  "userId": 1,
+  "id": 1,
+  "title": "Sunt aut facere repellat",
+  "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
 }
+```
 
 نحن سنعرض فقط العنون **title**، ففي النهاية غرضنا الوحيد هو أن نتعلم كيف نقوم باستخدام _Services_ لجلب البيانات وتقديمها للمكونات.
 
@@ -37,50 +39,57 @@ thumbnail: '../thumbnails/angular.png'
 
 لنقم أولا بإنشاء مشروع جديد بواسطة _Angular CLI_ من خلال تنفيذ هذا الأمر على _Terminal_ :
 
+```bash
 ng new angular-services
+```
 
 *angular-services* هو اسم المشروع ويمكنك طبعا اختيار الإسم الذي تريده.
 
 بعد إنتهاء إعداد المشروع، سنقوم بالدخول إلى المجلد _angular-services_ عن طريق الأمر :
 
+```bash
 cd angular-services
+```
 
-بعد ذلك نقوم بتنفيذ الأمر **_ng serve --watch_** حتى يمكننا فتح المشروع على المتصفح من خلال الرابط : _http://localhost:4200. _
+بعد ذلك نقوم بتنفيذ الأمر `ng serve --watch` حتى يمكننا فتح المشروع على المتصفح من خلال الرابط : `http://localhost:4200`.
 
 ستظهر الصفحة الرئيسية الإفتراضية، وسنقوم فيما بعد بالتعديل عليها.
 
 ## إنشاء الخدمة PostService
 
-سنقوم بإنشاء الخدمة *PostService* عن طريق نافذة الأوامر السطرية :
+سنقوم بإنشاء الخدمة `PostService` عن طريق نافذة الأوامر السطرية :
 
+```bash
 ng generate service post
+```
 
 هذا الأمر سيقوم بإنشاء ملفين :
 
 [![](../images/ng-generate-post-service.jpg)](../images/ng-generate-post-service.jpg)
 
-- _post.service.ts_ : وهو الملف الذي يحتوي على الكلاس **PostService**.
-- _post.service.spec.ts_ : الملف الذي نضع فيه الإختبارات التي نريد إجراءها للخدمة PostService. هذا الملف لن نركز عليه في هذا الدرس.
+- `post.service.ts` : وهو الملف الذي يحتوي على الكلاس **PostService**.
+- `post.service.spec.ts` : الملف الذي نضع فيه الإختبارات التي نريد إجراءها للخدمة PostService. هذا الملف لن نركز عليه في هذا الدرس.
 
-محتوى الملف _post.service.ts_ سيكون شئيا من هذا القبيل :
+محتوى الملف `post.service.ts` سيكون شئيا من هذا القبيل :
 
+```ts
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class PostService {
-
-constructor() { }
-
+  constructor() {}
 }
+```
 
-نلاحظ أن الكلاس PostService مسبوقة بالمصمم **injectable@**، هذا ضروري في تطبيقات أنجولار.
+نلاحظ أن الكلاس `PostService` مسبوقة بالمصمم `@injectable`، هذا ضروري في تطبيقات أنجولار.
 
 ### جلب البيانات بواسطة Ajax
 
-#### **1\. إعداد الملف app.module.ts**
+#### 1. إعداد الملف app.module.ts
 
-لجلب البيانات باستخدام تقنية Ajax يلزمنا اضافة وحدة جديدة للمشروع إسمها **HttpClientModule** وذلك من الملف *app.module.ts. *بعد استيراد الوحدة HttpClientModule لا يجب أن ننسى إضافتها إلى المصفوفة **imports** في المصمم **NgModule@** :
+لجلب البيانات باستخدام تقنية Ajax يلزمنا اضافة وحدة جديدة للمشروع إسمها `HttpClientModule` وذلك من الملف *app.module.ts. *بعد استيراد الوحدة `HttpClientModule` لا يجب أن ننسى إضافتها إلى المصفوفة `imports` في المصمم `@NgModule` :
 
+```ts
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -88,36 +97,33 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 @NgModule({
-declarations: [
-AppComponent
-],
-imports: [
-BrowserModule,
-HttpClientModule
-],
-providers: [],
-bootstrap: [AppComponent]
+  declarations: [AppComponent],
+  imports: [BrowserModule, HttpClientModule],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
+```
 
-#### **2\. إعداد الملف post.service.ts**
+#### 2. إعداد الملف post.service.ts
 
 بعد ذلك سنعود إلى **PostService** ونقوم باستيراد الكائن _HttpClient_. هذا الأخير هو الذي يستخدم للقيام بطلبات أجاكس في إطار العمل أنجولار. أولا سنقوم بحقنه (_Inject_) داخل _Constructor_ الخاص بالكلاس PostService، ثم نقوم باستخدامه داخل الدالة _fetchPosts_ التي سنقوم بإنشائها، بحيث تكون مهمتها الوحيدة هي جلب المقالات من الواجهة البرمجية _REST API_.
 
+```ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class PostService {
-constructor(private HttpClient:HttpClient) { }
+  constructor(private HttpClient: HttpClient) {}
 
-    fetchPosts(){
-      	return this.HttpClient.get("https://jsonplaceholder.typicode.com/posts");
-    }
-
+  fetchPosts() {
+    return this.HttpClient.get('https://jsonplaceholder.typicode.com/posts');
+  }
 }
+```
 
-#### **2\. إعداد الملف app.component.ts**
+#### 2. إعداد الملف app.component.ts
 
 الملف _app.component.ts_ سبق إنشاؤه من قبل _Angular CLI_ عندما قمنا بتوليد المشروع، وفيه يوجد الكلاس _AppComponent_ المسؤول عن المكون الرئيسي للتطبيق.
 
@@ -127,52 +133,56 @@ constructor(private HttpClient:HttpClient) { }
 4. **رابعا** سنقوم بإنشاء دالة جديدة اسمها _getPosts_ وبداخلها سنطلب من الخدمة PostService أن تقوم بجلب البيانات من الواجهة البرمجية _REST API._ سننتظر وصول البيانات بداخل الدالة _subscribe_ لنقوم باستقبالها في المصفوفة _this.posts._
 5. **خامسا**، يجب أن نقوم باستدعاء الدالة _getPosts_ حالما يتم عرض المكون _AppComponent_ على المتصفح. أفضل مكان لفعل ذلك هو في الدالة **ngOnInit**. هذه الأخيرة لا تتوفر لتطبيق أنجولار إلا بعد استيراد الواجهة **OnInit** وجعل المكون يستخدمها بواسطة التعبير _implements OnInit._
 
+```ts
 export class AppComponent implements OnInit {
 ...
 }
+```
 
 _ngOnInit_ هي جزء مما يسمى [دورة حياة المكونات في أنجولار](https://angular.io/guide/lifecycle-hooks). والكود الذي نضعه بداخلها يتم تنفيذه بمجرد إنشاء وإعداد المكون. _ngOnInit_ هي المكان الأفضل للقيام بطلبات الأجاكس التي يحتجاها المكون في بداية حياته، ولا ينصح أبدا بالقيام بمثل هذه الأمور في _Constructor_.
 
-بعد إتمام كل هذه الخطوات، يفترض أن يكون شكل الملف _app.component.ts_ على هذا النحو :
+بعد إتمام كل هذه الخطوات، يفترض أن يكون شكل الملف `app.component.ts` على هذا النحو :
 
+```ts
 import { Component, OnInit } from '@angular/core';
 import { PostService } from './post.service';
 
 @Component({
-selector: 'app-root',
-templateUrl: './app.component.html',
-styleUrls: ['./app.component.css'],
-providers : [PostService]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  providers: [PostService]
 })
 export class AppComponent implements OnInit {
-public posts: any;
+  public posts: any;
 
-constructor (private postService: PostService) {
+  constructor(private postService: PostService) {}
 
+  ngOnInit() {
+    this.getPosts();
+  }
+
+  getPosts() {
+    this.postService.fetchPosts().subscribe(data => {
+      this.posts = data;
+    });
+  }
 }
+```
 
-ngOnInit() {
-this.getPosts();
-}
+#### 4. عرض البيانات في واجهة المستخدم
 
-getPosts(){
-this.postService.fetchPosts().subscribe(data => {
-this.posts = data;
-});
-}
-}
+الآن لم يبقى لنا سوى عرض البيانات التي حصلنا عليها في واجهة المستخدم UI. وسيلتنا لذلك هي القالب `app.component.html` الخاص بالمكون `AppComponent`.
 
-#### **4. عرض البيانات في واجهة المستخدم**
+سنمسح كل الأكواد الإفتراضية الموجدة في هذا الملف ولنجعله فارغا. كل ما سنقوم بعرضه هو عناوين المقالات التي حصلنا عليها من الواجهة البرمجية، والتي كما تتذكرون استقبلناها في الخاصية `posts`.
 
-الآن لم يبقى لنا سوى عرض البيانات التي حصلنا عليها في واجهة المستخدم UI. وسيلتنا لذلك هي القالب _app.component.html_ الخاص بالمكون _AppComponent_.
-
-سنمسح كل الأكواد الإفتراضية الموجدة في هذا الملف ولنجعله فارغا. كل ما سنقوم بعرضه هو عناوين المقالات التي حصلنا عليها من الواجهة البرمجية، والتي كما تتذكرون استقبلناها في الخاصية **posts**.
-
+```html
 <h2 *ngFor="let post of posts">
   - {{post.title}}
 </h2>
+```
 
-ترون بأننا استخدمنا الحلقة **ngFor*** التي يتيحها أنجولار من أجل قراءة المصفوفة _posts_ وعرض العناوين داخل وسوم <h2>.
+ترون بأننا استخدمنا الحلقة `*ngFor` التي يتيحها أنجولار من أجل قراءة المصفوفة _posts_ وعرض العناوين داخل وسوم `<h2>`.
 
 بعد تحديث المتصفح سنرى بأن عناوين المقالات معروضة وفق المتوقع.
 

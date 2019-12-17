@@ -45,28 +45,38 @@ thumbnail: '../thumbnails/github.png'
 
 لندخل أولًا على مجلّد البرمجيّة التي نعمل عليها:
 
+```bash
 cd /path/to/project/folder
+```
 
 ثم نقوم بإنشاء مستودع محلّي عن طريق الأمر التالي:
 
+```bash
 git init
+```
 
 ثم نقوم بإضافة الملفات إلى مستودع Git :
 
+```bash
 git add .
 git commit -m "init commit"
+```
 
 لنتوجه الآن إلى المتصفح!
 
 قم بإنشاء مستودع جديد على bitbucket (سنسمّيه المستودع البعيد) ، ثم عُد إلى سطر أوامر الحاسب الشخصي، واكتب الأمر التالي لنقوم بربط المستودع البعيد، بالمستودع المحلي:
 
+```bash
 git remote add origin https://username@bitbucket.org/username/repository-name.git
+```
 
 https://username@bitbucket.org/username/repository-name.git هو المستودع الخاص بمشروعك على Bitbucket.
 
 الآن قُم برفع الملفات إلى المستودع البعيد:
 
+```bash
 git push origin master
+```
 
 ## كيف تحصل العملية
 
@@ -110,34 +120,48 @@ git push origin master
 
 الآن، للسماح للسيرفر بالدخول إلى حسابنا في Bitbucket لابد أن تقوم بعمل SSH Keys ونعطي Bitbucket المفتاح العام Public Key ليتأكد من هويّتنا. نَلِج إلى السيرفر الخاص بنا عن طريق SSH ، عن طريق الأمر التالي في Bash -في Putty هُناك واجهة رسومية تسهّل الموضوع-:
 
+```bash
 ssh username@host.com -p 2222
+```
 
 استخدمنا الخيار p لتحديد المنفذ Port الذي سنتخدمه، أغلب السيرفرات تستخدم المنفذ رقم 2222 . بعد أن ولجنا إلى السيرفر، نقوم بالتوجّه إلى مجلد SSH عن طريق الأمر التالي:
 
+```bash
 cd ~/.ssh
+```
 
 ولإنشاء مفتاح SSH ، نقوم بالأمر التالي:
 
+```bash
 key-gen -t rsa
+```
 
 سيطلب منك إنشاء جملة مرور (passphrase)، اتركها خالية، ليتمكّن السيرفر من الدخول إلى الحساب، إن أضفنا جملة مرور، لن يستطيع السيرفر الدخول إلى الحساب. الآن سيكون قد أُنشئ مفتاحين، عام وخاص، وسنقوم بنسخ المفتاح العام لإضافته إلى Bitbucket ، لنقم بالأمر التالي لاستخراج المفتاح:
 
+```bash
 cat id_rsa.pub
+```
 
 الآن نتّجه إلى حسابنا في Bitbucket ونتّجه إلى [هذا الرابط](https://bitbucket.org/account/ssh-keys/)، ثم نقوم بإضافة المفتاح الذي استخرجناه من الأمر السابق. الآن نعود إلى السيرفر، ونحرر ملف
 
+```bash
 ~/.ssh/config
+```
 
 لكي يتحققّ السيرفر من هويّة Bitbucket دون الحاجة إلى طلب كلمة المرور في كل مرة، نقوم بإضافة التالي إلى الملف السابق، ونضيف التالي، أنشئ الملف إن لم يكن موجودًا:
 
+```bash
 Host bitbucket.org
 IdentityFile ~/.ssh/id_rsa
+```
 
 ## تهيئة المشروع على السيرفر
 
 الآن نقوم بجلب ملفات المشروع من المستودع البعيد، اتّجه إلى المكان الذي تريد فيه إضافة المشروع وأدخل الأمر التالي:
 
+```bash
 git clone --mirror git@bitbucket.org:<username>/<repo-name>.git
+```
 
 الخيار mirror ، يقوم بإنشاء مرآة من المشروع الخاص بنا، أي أن هذه النسخة، ليست نسخة للعمل والتعديل.
 
@@ -145,36 +169,37 @@ git clone --mirror git@bitbucket.org:<username>/<repo-name>.git
 
 نقوم الآن بإنشاء الملف الذي سيُرسل إلى طلب الـ Webhook ، قُم بإنشاء الملف الذي أضفته حين إنشاء الـ Webhook ، وقم بإنشائه في المكان الذي حددّته، وسمّه بالاسم الذي أضفته سابقًا. الآن سنضيف السكربت الذي سيستقبل الـ Webhook ، نحنُ اخترنا لغة PHP ، لكن بإمكانك إنشاء السكربت بأي لغة تفضّل. قُم بفتح الملف، وأضف الشفرة التالية:
 
-<?php	 	 
-if(isset($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT'] == "Bitbucket-Webhooks/2.0"){	 	 
- $payload = json_decode(file_get_contents('php://input'));	 	 
- if(isset($payload) && !empty($payload)){	 	 
- echo "Payload found...\n";	 	 
- if(isset($payload->push,$payload->push->changes[0]) && !empty($payload->push->changes[0])){	 	 
- echo "There is somechanges...\n";	 	 
- if(function_exists('exec')) {	 	 
- echo "lets execute script...\n";	 	 
- exec('git fetch --all',$output,$return);	 	 
- if(!$return){	 	 
- exec('git reset --hard origin/master',$output,$return);	 	 
- if(!$return){	 	 
- die('Run Success!');	 	 
- }else{	 	 
- die('Error in <code>reset</code>');	 	 
- }	 	 
- }else{	 	 
- die('Error in <code>fetch</code>');	 	 
- }	 	 
- }else{	 	 
- die('disable to excute script.');	 	 
- }	 	 
- }else{	 	 
- die('Already up-to-date.');	 	 
- }	 	 
- }else{	 	 
- die('No payload found!');	 	 
- }	 	 
-}	 	 
+```php
+if(isset($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT'] == "Bitbucket-Webhooks/2.0"){
+ $payload = json_decode(file_get_contents('php://input'));
+ if(isset($payload) && !empty($payload)){
+  echo "Payload found...\n";
+ if(isset($payload->push,$payload->push->changes[0]) && !empty($payload->push->changes[0])){
+  echo "There is somechanges...\n";
+ if(function_exists('exec')) {
+  echo "lets execute script...\n";
+  exec('git fetch --all',$output,$return);
+ if(!$return){
+  exec('git reset --hard origin/master',$output,$return);
+ if(!$return){
+  die('Run Success!');
+ }else{
+  die('Error in <code>reset</code>');
+ }
+ }else{
+  die('Error in <code>fetch</code>');
+ }
+ }else{
+  die('disable to excute script.');
+ }
+ }else{
+ die('Already up-to-date.');
+ }
+ }else{
+  die('No payload found!');
+ }
+}
+```
 
 هذا السكربت، يقوم بالتالي:
 
@@ -184,10 +209,13 @@ if(isset($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT'] == "Bitbuck
 4. يتحقق من وجود تغيّرات في المستودع البعيد.
 5. يتأكد من وجود وتفعيل دالّة exec التي تقوم بتنفيذ الأوامر على السيرفر، إن لم تكنّ مفعلة قُم بتفعيلها من ملف php.ini ، أو قم بمراسلة مستضيفك لتفعيلها.
 6. يقوم بجلب التغيّرات من المستودع البعيد، عن طريق الأمر:
-    
-    git fetch
-    
-    قد تتساءل لماذا استخدمنا fetch وليس pull ؟ لأن fetch تقوم بجلب التغيّرات من المستودع البعيد دون أن تقوم بتغييرات في شجرة العمل (working tree)، بينما pull تقوم بدمج (merge) الفروع (branch) وحينها تخبرك: هل تريد هذا الدمج أم لا؟ لذلك ستعيق عمل السيرفر، بينما fetch لا تعيقه لأنها لا تقوم بالدمج أصلًا.
+
+```bash
+ git fetch
+```
+
+قد تتساءل لماذا استخدمنا fetch وليس pull ؟ لأن fetch تقوم بجلب التغيّرات من المستودع البعيد دون أن تقوم بتغييرات في شجرة العمل (working tree)، بينما pull تقوم بدمج (merge) الفروع (branch) وحينها تخبرك: هل تريد هذا الدمج أم لا؟ لذلك ستعيق عمل السيرفر، بينما fetch لا تعيقه لأنها لا تقوم بالدمج أصلًا.
+
 7. يتحقق من أن الأمر fetch قد تم.
 8. كون fetch لا تقوم بتغيير شجرة العمل، نحن بحاجة إلى جعلها تقوم بذلك، وكوننا نملتك التغيّرات البعيدة عن طريق الأمر السابق، نقوم الآن بإعادة التغيّرات بشكل قسري إلى الفرع origin/master.
 9. إذا تم الأمر السابق، يقوم بقتل العمليّة مع طباعة أن الأمر قد تم بنجاح.
@@ -200,9 +228,11 @@ if(isset($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT'] == "Bitbuck
 
 الآن أنت مستعد لنشر البرمجية، متى ما قمت بتغيّرات في المستودع المحلي، قم بدفعها إلى المستودع البعيد، ولتقم من التحقق من أن العملية عملت بشكلٍ سليم، قم بالدخول إلى الرابط التالي:
 
+```bash
 https://bitbucket.org/<user>/{repo-name}/admin/addon/admin/bitbucket-webhooks/bb-webhooks-repo-admin
+```
 
-لا تنسى تعديل {repo-name} باسم مستودعك البعيد.
+لا تنسى تعديل `{repo-name}` باسم مستودعك البعيد.
 
 ## الأخطاء المحتملة
 
@@ -214,13 +244,17 @@ https://bitbucket.org/<user>/{repo-name}/admin/addon/admin/bitbucket-webhooks/bb
 
 ### عدم التعرّف على أمر git
 
-تأكد من أن ملف git الثنائي (binary)، مُضاف إلى متغيّر البيئة $PATH ، إن لم يكن كذلك، قم بإضافة هذا المسار إلى المتغيّر:
+تأكد من أن ملف git الثنائي (binary)، مُضاف إلى متغيّر البيئة `$PATH` ، إن لم يكن كذلك، قم بإضافة هذا المسار إلى المتغيّر:
 
+```bash
 /usr/local/bin/git
+```
 
 إن لم يكنّ الملف في هذا المسار، قُم بالأمر التالي لمعرفة أين يوجد الملف:
 
+```bash
 which git
+```
 
 ## خاتمة
 

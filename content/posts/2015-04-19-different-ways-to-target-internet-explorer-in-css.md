@@ -17,53 +17,61 @@ thumbnail: '../thumbnails/css3.png'
 
 ## استعمال CSS hacks
 
-CSS hacks هي رموز يتم إضافتها للخاصية (_ , * ...) في كود CSS ويتم عن طريقها استهداف متصفح دون الآخر، كما ستلاحظون في المثال التالي:
+CSS hacks هي رموز يتم إضافتها للخاصية (\_ , \* ...) في كود CSS ويتم عن طريقها استهداف متصفح دون الآخر، كما ستلاحظون في المثال التالي:
 
+```css
 body {
-background-color: white; /* يعمل في جميع المتصفحات */
-*background-color : black; /* يعمل في انترنت إكسبلورر 7 و6 */
-_background-color : blue; /* يعمل في انترنت إكسبلورر 6 */
+  background-color: white; /* يعمل في جميع المتصفحات */
+  *background-color: black; /* يعمل في انترنت إكسبلورر 7 و6 */
+  _background-color: blue; /* يعمل في انترنت إكسبلورر 6 */
 }
+```
 
 عند تجربة الكود أعلاه سنرى أن لون الخلفية سيكون **أسودا** في IE7 و**أزرقا** في IE6 بينما سيكون **أبيضا** في باقي المتصفحات.
 
 ## استعمال التعليقات الشرطية Conditional Comments
 
-### 1.الطريقة الأولى: إضافة كلاس لوسم <html>
+### 1.الطريقة الأولى: إضافة كلاس لوسم `<html>`
 
 عن طريق التعليقات الشرطية يمكن مثلا إضافة كلاس لوسم ال html على حسب نسخة الإنترنت إكسبلورر التي فتحنا فيها الصفحة، مثلا ie8 إذا كنا في IE8 و ie7 إذا كنا في IE7 وهكذا، إليكم المثال:
 
+```html
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html><!--<![endif]-->
+<!--[if lt IE 7]> <html class="ie6"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html><!--<![endif]--></html>
+```
 
-في المثال أعلاه قمنا بإضافة كلاس خاصة للعنصر <html> على حسب متصفح IE الذي نعمل عليه (ie6،ie7،ie8) وهكذا يمكننا استعمال هذه الكلاسات في ملف ال CSS كما ستلاحظون في المثال التالي :
+في المثال أعلاه قمنا بإضافة كلاس خاصة للعنصر `<html>` على حسب متصفح IE الذي نعمل عليه (ie6،ie7،ie8) وهكذا يمكننا استعمال هذه الكلاسات في ملف ال CSS كما ستلاحظون في المثال التالي :
 
+```css
 body{
 background-color: white;
 }
 .ie7 body{
-background-color: black; /* يعمل في انترنت إكسبلورر 7 */
+background-color: black; /_ يعمل في انترنت إكسبلورر 7 _/
 }
 .ie6 body{
-background-color: blue; /* يعمل في انترنت إكسبلورر 6 */
+background-color: blue; /_ يعمل في انترنت إكسبلورر 6 _/
 }
+```
 
 ###  2.الطريقة الثانية: إضافة ملف CSS خاص ب IE
 
 هذه الطريقة هي الأفضل حيث سنقوم بإنشاء ملف أو عدة ملفات CSS حسب الحاجة ونقوم باستدعائها في متصفح إنترنت إكسبلورر الذي نريد استهدافه فقط، وإليكم الكيفية:
 
-<!--[if lt IE 7 ]>
-	<link rel="stylesheet" type="text/css" href="css/ie6.css" />
- <![endif]-->
-<!--[if IE 7 ]>
-	<link rel="stylesheet" type="text/css" href="css/ie7.css" />
+```html
+<!--[if lt IE 7]>
+  <link rel="stylesheet" type="text/css" href="css/ie6.css" />
 <![endif]-->
-<!--[if IE 8 ]>
-	<link rel="stylesheet" type="text/css" href="css/ie8.css" />
+<!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="css/ie7.css" />
 <![endif]-->
+<!--[if IE 8]>
+  <link rel="stylesheet" type="text/css" href="css/ie8.css" />
+<![endif]-->
+```
 
 وهكذا نضع الأكواد التي تخص متصفح IE6 في ملف ie6.css والستايل الخاص ب IE7 في ملف ie7 وهكذا.
 
