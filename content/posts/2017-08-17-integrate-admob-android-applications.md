@@ -42,7 +42,7 @@ thumbnail: '../thumbnails/android.png'
 
 سيطلب منك البرنامج اختيار نوع ال Activity التي تريد أن تبدأ بها مشروعك، سنقوم نحن باختيار **Empty Activity** لهذا الدرس لأنها الأكثر بساطة وكما هو واضح من اسمها فهي فارغة ولا تحتوي على أي وظائف أخرى.
 
-[![Android Studio Empty Activity](../images/android-studio-empty-activity-1024x640.jpg)](../images/android-studio-empty-activity.jpg)
+![Android Studio Empty Activity](../images/android-studio-empty-activity.jpg)
 
 بعد الإختيار، سنقوم بالضغط على **Next** وننتظر قليلا حتى ينتهي أندرويد ستوديو من تهيئة المشروع فنقوم بفتح الملف **build.gradle** الموجود داخل المجلد **app **ونضيف له السطر التالي compile 'com.google.android.gms:play-services-ads:11.0.4' الذي يمكننا من استدعاء خدمات Google Services Ads للإتصال بمنصة Admob للإعلانات، ثم نقوم بالضغط على **Sync now**.
 
