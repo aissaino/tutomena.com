@@ -45,23 +45,25 @@ export default function NewsletterForm() {
   return (
     <>
       {message && <blockquote className={result.result}>{message}</blockquote>}
-      <div className="newsletter-form">
-        <h4>القائمة البريدية</h4>
-        <form onSubmit={handleSubmit(email, { listFields })}>
-          <input
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-            placeholder="البريد الإلكتروني"
-          />
-          <input
-            type="text"
-            value={listFields.name}
-            onChange={handleNameChange}
-            placeholder="الإسم الكامل"
-          />
-          <button className="button">أريد الإشتراك</button>
-        </form>
+      <div>
+        <div className="newsletter-form">
+          <h4>القائمة البريدية</h4>
+          <form onSubmit={handleSubmit(email, { listFields })}>
+            <input
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              placeholder="البريد الإلكتروني"
+            />
+            <input
+              type="text"
+              value={listFields.name}
+              onChange={handleNameChange}
+              placeholder="الإسم الكامل"
+            />
+            <button className="button">أريد الإشتراك</button>
+          </form>
+        </div>
       </div>
     </>
   );
